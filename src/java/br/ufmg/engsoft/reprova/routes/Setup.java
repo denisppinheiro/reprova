@@ -28,7 +28,7 @@ public class Setup {
   /**
    * Logger instance.
    */
-  protected static Logger logger = LoggerFactory.getLogger(Setup.class);
+  protected static Logger LOGGER = LoggerFactory.getLogger(Setup.class);
 
   /**
    * The port for the webserver.
@@ -55,12 +55,12 @@ public class Setup {
 
     Spark.port(Setup.port);
 
-    logger.info("Spark on port " + Setup.port);
+    LOGGER.info("Spark on port " + Setup.port);
 
-    logger.info("Setting up static resources.");
+    LOGGER.info("Setting up static resources.");
     Spark.staticFiles.location("/public");
 
-    logger.info("Setting up questions route:");
+    LOGGER.info("Setting up questions route:");
     var questions = new Questions(json, questionsDAO);
     questions.setup();    
   }
@@ -69,7 +69,7 @@ public class Setup {
    * Questionnaire answers
    */
   public static void answerRoutes(Json json, AnswersDAO answersDAO) {      
-      logger.info("Setting up answers route:");
+      LOGGER.info("Setting up answers route:");
       if (answersDAO == null) {
         throw new IllegalArgumentException("answersDAO mustn't be null");
       }
@@ -81,7 +81,7 @@ public class Setup {
    * Questionnaire routes
    */
   public static void questionnaireRoutes(Json json, QuestionnairesDAO questionnairesDAO, QuestionsDAO questionsDAO) {
-      logger.info("Setting up questionnaires route:");
+      LOGGER.info("Setting up questionnaires route:");
       if (questionnairesDAO == null) {
           throw new IllegalArgumentException("questionnairesDAO mustn't be null");
         }

@@ -18,7 +18,7 @@ public class Answers extends ReprovaRoute {
 	/**
 	   * Logger instance.
 	   */
-	  protected static final Logger logger = LoggerFactory.getLogger(Answers.class);
+	  protected static final Logger LOGGER = LoggerFactory.getLogger(Answers.class);
 	  
 	  /**
 	   * Json formatter.
@@ -62,7 +62,7 @@ public class Answers extends ReprovaRoute {
 	    Spark.get("/api/questions/:questionId/answers/:answerId", (req, res) -> "Specific answer");
 	    Spark.post("/api/questions/:questionId/answers", this::addAnswer);
 
-	    logger.info("Setup /api/answers.");
+	    LOGGER.info("Setup /api/answers.");
 	  }
 	  
 	  /**
@@ -70,7 +70,7 @@ public class Answers extends ReprovaRoute {
        * if an 'id' query parameter is provided.
        */
       protected Object getAllAnswers(Request request, Response response) {
-        logger.info("Received answers get:");
+        LOGGER.info("Received answers get:");
 
         String id = request.params(":questionId");
         boolean auth = authorized(request.queryParams("token"));
@@ -78,7 +78,7 @@ public class Answers extends ReprovaRoute {
         // TODO check how to use auth here
         var answers = answersDAO.list(id, auth ? null : false);
         
-        logger.info("Done. Responding...");
+        LOGGER.info("Done. Responding...");
         response.status(200);
         return json.render(answers);
       }
@@ -92,7 +92,7 @@ public class Answers extends ReprovaRoute {
       protected Object addAnswer(Request request, Response response) {
         String body = request.body();
 
-        logger.info("Received answer post:" + body);
+        LOGGER.info("Received answer post:" + body);
 
         response.type("application/json");
 
@@ -100,9 +100,9 @@ public class Answers extends ReprovaRoute {
         String questionId = request.params(":questionId");
 
         if (!authorized(token)) {
-          logger.info("Unauthorized token: " + token);
+          LOGGER.info("Unauthorized token: " + token);
           response.status(403);
-          return unauthorized;
+          return UNAUTHORIZED;
         }
 
         Answer answer;
@@ -112,13 +112,13 @@ public class Answers extends ReprovaRoute {
             .build();
         }
         catch (Exception e) {
-          logger.error("Invalid request payload!", e);
+          LOGGER.error("Invalid request payload!", e);
           response.status(400);
-          return invalid;
+          return INVALID;
         }
 
-        logger.info("Parsed " + answer.toString());
-        logger.info("Adding question.");
+        LOGGER.info("Parsed " + answer.toString());
+        LOGGER.info("Adding question.");
 
         var success = answersDAO.add(answer, questionId);
 
@@ -127,8 +127,8 @@ public class Answers extends ReprovaRoute {
                    : 400
         );
 
-        logger.info("Done. Responding...");
+        LOGGER.info("Done. Responding...");
 
-        return okStatus;
+        return OKSTATUS;
       }
 }

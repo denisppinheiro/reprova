@@ -77,11 +77,11 @@ public class Json {
         );
 
       // Mongo's id property doesn't match Question.id:
-      var _id = json.getAsJsonObject().get(IDENTIFIER);
+      var iId = json.getAsJsonObject().get(IDENTIFIER);
 
-      if (_id != null) {
+      if (iId != null) {
         questionBuilder.setId(
-          _id.getAsJsonObject()
+          iId.getAsJsonObject()
             .get(OIDENTIFIER)
             .getAsString()
         );
@@ -113,11 +113,11 @@ public class Json {
         );
 
         // Mongo's id property doesn't match Question.id:
-        var _id = json.getAsJsonObject().get(IDENTIFIER);
+        var iId = json.getAsJsonObject().get(IDENTIFIER);
 
-        if (_id != null) {
+        if (iId != null) {
           answerBuilder.getId(
-            _id.getAsJsonObject()
+            iId.getAsJsonObject()
               .get(OIDENTIFIER)
               .getAsString()
           );
@@ -158,11 +158,11 @@ public class Json {
         );
 
       // Mongo's id property doesn't match Questionnaire.id:
-      var _id = json.getAsJsonObject().get(IDENTIFIER);
+      var iId = json.getAsJsonObject().get(IDENTIFIER);
 
-      if (_id != null) {
+      if (iId != null) {
         questionnaireBuilder.id(
-          _id.getAsJsonObject()
+          iId.getAsJsonObject()
             .get(OIDENTIFIER)
             .getAsString()
         );
@@ -203,11 +203,11 @@ public class Json {
         );
 
       // Mongo's id property doesn't match Questionnaire.id:
-      var _id = json.getAsJsonObject().get(IDENTIFIER);
+      var iId = json.getAsJsonObject().get(IDENTIFIER);
 
-      if (_id != null) {
+      if (iId != null) {
         questionnaireGenerator.setId(
-          _id.getAsJsonObject()
+          iId.getAsJsonObject()
             .get(OIDENTIFIER)
             .getAsString()
         );

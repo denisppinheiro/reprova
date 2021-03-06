@@ -29,7 +29,7 @@ public class AnswersDAO {
   /**
    * Logger instance.
    */
-  protected static final Logger logger = LoggerFactory.getLogger(AnswersDAO.class);
+  protected static final Logger LOGGER = LoggerFactory.getLogger(AnswersDAO.class);
 
   /**
    * Json formatter.
@@ -47,8 +47,8 @@ public class AnswersDAO {
    * @param json  the json formatter for the database's documents, mustn't be null
    * @throws IllegalArgumentException  if any parameter is null
    */
-  public AnswersDAO(Mongo mongo_db, Json json) {
-    if (mongo_db == null) {
+  public AnswersDAO(Mongo mongoDb, Json json) {
+    if (mongoDb == null) {
       throw new IllegalArgumentException("db mustn't be null");
     }
 
@@ -56,7 +56,7 @@ public class AnswersDAO {
       throw new IllegalArgumentException("json mustn't be null");
     }
 
-    this.collection = mongo_db.getCollection("answers");
+    this.collection = mongoDb.getCollection("answers");
 
     this.json = json;
   }
@@ -76,19 +76,19 @@ public class AnswersDAO {
 
     var doc = document.toJson();
 
-    logger.info("Fetched answer: " + doc);
+    LOGGER.info("Fetched answer: " + doc);
 
     try {
       var answer = json
         .parse(doc, Answer.Builder.class)
         .build();
 
-      logger.info("Parsed answer: " + answer);
+      LOGGER.info("Parsed answer: " + answer);
 
       return answer;
     }
     catch (Exception e) {
-      logger.error("Invalid document in database!", e);
+      LOGGER.error("Invalid document in database!", e);
       throw new IllegalArgumentException(e);
     }
   }
@@ -111,7 +111,7 @@ public class AnswersDAO {
       .first();
 
     if (answer == null) {
-      logger.info("No such answer " + identifier);
+      LOGGER.info("No such answer " + identifier);
     }
 
     return answer;
@@ -184,12 +184,12 @@ public class AnswersDAO {
 		      );
 
       if (!result.wasAcknowledged()) {
-        logger.warn("Failed to replace answer " + identifier);
+        LOGGER.warn("Failed to replace answer " + identifier);
         return false;
       }
     }
 
-    logger.info("Stored answer " + doc.get("_id"));
+    LOGGER.info("Stored answer " + doc.get("_id"));
 
     return true;
   }
@@ -211,9 +211,9 @@ public class AnswersDAO {
     ).wasAcknowledged();
 
     if (result) {
-      logger.info("Deleted answer " + identifier);
+      LOGGER.info("Deleted answer " + identifier);
     } else {
-      logger.warn("Failed to delete answer " + identifier);
+      LOGGER.warn("Failed to delete answer " + identifier);
     }
 
     return result;

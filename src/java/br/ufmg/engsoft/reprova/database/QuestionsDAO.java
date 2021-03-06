@@ -30,7 +30,7 @@ public class QuestionsDAO {
     /**
      * Logger instance.
      */
-    protected static final Logger logger = LoggerFactory.getLogger(QuestionsDAO.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(QuestionsDAO.class);
 
     /**
      * Json formatter.
@@ -77,14 +77,14 @@ public class QuestionsDAO {
 
         var doc = document.toJson();
 
-        logger.info("Fetched question: " + doc);
+        LOGGER.info("Fetched question: " + doc);
 
         try {
             var question = json.parse(doc, Question.Builder.class).build();
 
             return question;
         } catch (Exception e) {
-            logger.error("Invalid document in database!", e);
+            LOGGER.error("Invalid document in database!", e);
             throw new IllegalArgumentException(e);
         }
     }
@@ -104,7 +104,7 @@ public class QuestionsDAO {
         var question = this.collection.find(eq(new ObjectId(id))).map(this::parseDoc).first();
 
         if (question == null) {
-            logger.info("No such question " + id);
+            LOGGER.info("No such question " + id);
         }
 
         return question;
@@ -192,12 +192,12 @@ public class QuestionsDAO {
         	var result = this.collection.replaceOne(eq(new ObjectId(id)), doc);
 
             if (!result.wasAcknowledged()) {
-                logger.warn("Failed to replace question " + id);
+                LOGGER.warn("Failed to replace question " + id);
                 return false;
             }
         }
 
-        logger.info("Stored question " + doc.get("_id"));
+        LOGGER.info("Stored question " + doc.get("_id"));
 
         return true;
     }
@@ -216,9 +216,9 @@ public class QuestionsDAO {
         var result = this.collection.deleteOne(eq(new ObjectId(id))).wasAcknowledged();
 
         if (result) {
-            logger.info("Deleted question " + id);
+            LOGGER.info("Deleted question " + id);
         } else {
-            logger.warn("Failed to delete question " + id);
+            LOGGER.warn("Failed to delete question " + id);
         }
 
         return result;

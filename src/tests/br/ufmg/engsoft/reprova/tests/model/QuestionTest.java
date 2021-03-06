@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import br.ufmg.engsoft.reprova.model.Question;
 
 
-public class QuestionTest {
+class QuestionTest {
   /**
    * A question mustn't have a null theme.
    */

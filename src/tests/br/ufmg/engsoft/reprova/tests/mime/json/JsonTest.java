@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import br.ufmg.engsoft.reprova.mime.json.Json;
 import br.ufmg.engsoft.reprova.model.Question;
 
-public class JsonTest {
+class JsonTest {
 	/**
 	 * Rendering then parsing should produce an equivalent object.
 	 */

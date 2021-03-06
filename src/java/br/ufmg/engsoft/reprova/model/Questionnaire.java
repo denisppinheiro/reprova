@@ -45,23 +45,23 @@ public class Questionnaire{
     protected int questionsCount;
 
      /*id*/
-    public Generator id(String id){
+    public Generator setId(String id){
       this.id = id;
       return this;
     }
 
      /*averageDifficulty*/
-    public Generator averageDifficulty(String averageDifficulty){
+    public Generator setAverageDifficulty(String averageDifficulty){
       this.averageDifficulty = averageDifficulty;
       return this;
     }
     /*totalEstimatedTime*/
-    public Generator totalEstimatedTime(int totalEstimatedTime){
+    public Generator setTotalEstimatedTime(int totalEstimatedTime){
       this.totalEstimatedTime = totalEstimatedTime;
       return this;
     }
     /*questionsCount*/
-    public Generator questionsCount(int questionsCount){
+    public Generator setQuestionsCount(int questionsCount){
       this.questionsCount = questionsCount;
       return this;
     }

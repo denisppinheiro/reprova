@@ -17,10 +17,10 @@ public class JsonTest {
   @Disabled
   void question() {
     var question = new Question.Builder()
-      .id("id")
-      .theme("theme")
-      .description("description")
-      .statement("statement")
+      .setId("id")
+      .setTheme("theme")
+      .setDescription("description")
+      .setStatement("statement")
       // .record(
       //   Map.of(
       //     new Semester(2019, Semester.Reference._1), Map.of(
@@ -31,8 +31,8 @@ public class JsonTest {
       //     new Semester(2020, Semester.Reference._2), Collections.emptyMap()
       //   )
       // )
-      .pvt(false)
-      .estimatedTime(8)
+      .setPvt(false)
+      .setEstimatedTime(8)
       .build();
 
     var formatter = new Json();

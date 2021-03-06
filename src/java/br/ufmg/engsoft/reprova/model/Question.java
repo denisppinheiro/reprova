@@ -90,67 +90,67 @@ public class Question {
         protected Map<String, Double> statistics;
 
 	/*id*/
-        public Builder id(String id) {
+        public Builder setId(String id) {
             this.id = id;
             return this;
         }
 
 	/*theme*/
-        public Builder theme(String theme) {
+        public Builder setTheme(String theme) {
             this.theme = theme;
             return this;
         }
 
 	/*description*/
-        public Builder description(String description) {
+        public Builder setDescription(String description) {
             this.description = description;
             return this;
         }
 
 	/*statement*/
-        public Builder statement(String statement) {
+        public Builder setStatement(String statement) {
             this.statement = statement;
             return this;
         }
 
 	    /*record*/
-        public Builder record(Map<Semester, Map<String, Map<String, Float>>> record) {
+        public Builder setRecord(Map<Semester, Map<String, Map<String, Float>>> record) {
             this.record = record;
             return this;
         }
 
 	    /*pvt*/
-        public Builder pvt(boolean pvt) {
+        public Builder setPvt(boolean pvt) {
             this.pvt = pvt;
             return this;
         }
 
 	    /*choices*/
-        public Builder choices(Map<String, Boolean> choices) {
+        public Builder setChoices(Map<String, Boolean> choices) {
             this.choices = choices;
             return this;
         }
 
 	    /*estimated time*/
-        public Builder estimatedTime(int estimatedTime) {
+        public Builder setEstimatedTime(int estimatedTime) {
             this.estimatedTime = estimatedTime;
             return this;
         }
 
 	    /*difficulty*/
-        public Builder difficulty(String difficulty) {
+        public Builder setDifficulty(String difficulty) {
             this.difficulty = difficulty;
             return this;
         }
         
 	    /*statistics*/
-        public Builder statistics(Map<String, Double> statistics) {
+        public Builder setStatistics(Map<String, Double> statistics) {
         	this.statistics = statistics;
         	return this;
         }
 
 	    /*difficulty group*/
-        public Builder difficultyGroup(List<String> difficulty) {
+        public Builder setDifficultyGroup(List<String> difficulty) {
             this.difficultyGroup = difficulty;
             return this;
 				}

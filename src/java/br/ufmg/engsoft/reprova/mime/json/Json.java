@@ -80,7 +80,7 @@ public class Json {
       var _id = json.getAsJsonObject().get(IDENTIFIER);
 
       if (_id != null) {
-        questionBuilder.id(
+        questionBuilder.setId(
           _id.getAsJsonObject()
             .get(OIDENTIFIER)
             .getAsString()
@@ -116,7 +116,7 @@ public class Json {
         var _id = json.getAsJsonObject().get(IDENTIFIER);
 
         if (_id != null) {
-          answerBuilder.id(
+          answerBuilder.getId(
             _id.getAsJsonObject()
               .get(OIDENTIFIER)
               .getAsString()
@@ -206,7 +206,7 @@ public class Json {
       var _id = json.getAsJsonObject().get(IDENTIFIER);
 
       if (_id != null) {
-        questionnaireGenerator.id(
+        questionnaireGenerator.setId(
           _id.getAsJsonObject()
             .get(OIDENTIFIER)
             .getAsString()

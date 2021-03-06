@@ -16,8 +16,8 @@ public class QuestionTest {
       IllegalArgumentException.class,
       () -> {
         new Question.Builder()
-          .theme(null)
-          .description("desc")
+          .setTheme(null)
+          .setDescription("desc")
           .build();
       }
     );
@@ -32,8 +32,8 @@ public class QuestionTest {
       IllegalArgumentException.class,
       () -> {
         new Question.Builder()
-          .theme("")
-          .description("desc")
+          .setTheme("")
+          .setDescription("desc")
           .build();
       }
     );
@@ -48,8 +48,8 @@ public class QuestionTest {
       IllegalArgumentException.class,
       () -> {
         new Question.Builder()
-          .theme("theme")
-          .description(null)
+          .setTheme("theme")
+          .setDescription(null)
           .build();
       }
     );
@@ -64,8 +64,8 @@ public class QuestionTest {
       IllegalArgumentException.class,
       () -> {
         new Question.Builder()
-          .theme("theme")
-          .description("")
+          .setTheme("theme")
+          .setDescription("")
           .build();
       }
     );

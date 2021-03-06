@@ -184,21 +184,21 @@ public class Questionnaires {
   private Question buildQuestion(Question question){
     if (Environments.getInstance().isEnableEstimatedTime()){
       return new Question.Builder()
-                    .theme(question.theme)
-                    .description(question.description)
-                    .statement(question.statement)
-                    .estimatedTime(question.estimatedTime)
-                    .record(question.record)
-                    .pvt(question.pvt)
+                    .setTheme(question.theme)
+                    .setDescription(question.description)
+                    .setStatement(question.statement)
+                    .setEstimatedTime(question.estimatedTime)
+                    .setRecord(question.record)
+                    .setPvt(question.pvt)
                     .build();
     }
 
     return new Question.Builder()
-                  .theme(question.theme)
-                  .description(question.description)
-                  .statement(question.statement)
-                  .record(question.record)
-                  .pvt(question.pvt)
+                  .setTheme(question.theme)
+                  .setDescription(question.description)
+                  .setStatement(question.statement)
+                  .setRecord(question.record)
+                  .setPvt(question.pvt)
                   .build();
   }
   

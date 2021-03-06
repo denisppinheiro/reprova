@@ -63,24 +63,24 @@ public class Answer {
 	    protected String questionId;
 	    
 	    /* Builder pvt */
-	    public Builder id(String id) {
+	    public Builder getId(String id) {
 	        this.id = id;
 	        return this;
 	    }
 	    /* Builder description */
-	    public Builder description(String description) {
+	    public Builder getDescription(String description) {
 	        this.description = description;
 	        return this;
 	    }
 	    
 	    /* Builder Builder pvt */
-	    public Builder pvt(boolean pvt) {
+	    public Builder getPvt(boolean pvt) {
 	        this.pvt = pvt;
 	        return this;
 	    }
 		
 	    /* Builder questionId */
-	    public Builder questionId(String questionId) {
+	    public Builder getQuestionId(String questionId) {
 	        this.questionId = questionId;
 	        return this;
 	    }

@@ -52,7 +52,7 @@ public class QuestionnaireTest {
       .build();
     
     assertFalse(questionnaire == null);
-    assertEquals(null, questionnaire.id);
+    assertEquals(null, questionnaire.getId());
     assertEquals(0, questionnaire.questions.size());
     assertEquals(0, questionnaire.totalEstimatedTime);
     assertEquals(null, questionnaire.averageDifficulty);
@@ -81,7 +81,7 @@ public class QuestionnaireTest {
       .build();
     
     assertFalse(questionnaire == null);
-    assertEquals("1", questionnaire.id);
+    assertEquals("1", questionnaire.getId());
     assertEquals(1, questionnaire.questions.size());
     assertEquals(8, questionnaire.totalEstimatedTime);
     assertEquals("Average", questionnaire.averageDifficulty);
@@ -117,7 +117,7 @@ public class QuestionnaireTest {
       .generate(_questionsDAO);
     
     assertFalse(questionnaire == null);
-    assertEquals(null, questionnaire.id);
+    assertEquals(null, questionnaire.getId());
     assertEquals(5, questionnaire.questions.size());
     assertEquals(60, questionnaire.totalEstimatedTime);
     assertEquals(null, questionnaire.averageDifficulty);
@@ -140,7 +140,7 @@ public class QuestionnaireTest {
       .generate(_questionsDAO);
     
     assertFalse(questionnaire == null);
-    assertEquals(null, questionnaire.id);
+    assertEquals(null, questionnaire.getId());
     assertEquals(1, questionnaire.questions.size());
     assertEquals(8, questionnaire.totalEstimatedTime);
     assertEquals("Average", questionnaire.averageDifficulty);
@@ -163,7 +163,7 @@ public class QuestionnaireTest {
       .generate(_questionsDAO);
     
     assertFalse(questionnaire == null);
-    assertEquals(null, questionnaire.id);
+    assertEquals(null, questionnaire.getId());
     assertEquals(1, questionnaire.questions.size());
     assertEquals(8, questionnaire.totalEstimatedTime);
     assertEquals("Average", questionnaire.averageDifficulty);

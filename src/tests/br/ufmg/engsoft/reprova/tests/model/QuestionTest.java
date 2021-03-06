@@ -56,7 +56,7 @@ public class QuestionTest {
       .build();
 
     assertFalse(question == null);
-    assertEquals(null, question.id);
+    assertEquals(null, question.getId());
     assertEquals("theme", question.theme);
     assertEquals("description", question.description);
     assertEquals(true, question.pvt);
@@ -84,7 +84,7 @@ public class QuestionTest {
     question.calculateDifficulty();
 
     assertFalse(question == null);
-    assertEquals(null, question.id);
+    assertEquals(null, question.getId());
     assertEquals("theme", question.theme);
     assertEquals("description", question.description);
     assertEquals(true, question.pvt);
@@ -122,7 +122,7 @@ public class QuestionTest {
     question.calculateDifficulty();
 
     assertFalse(question == null);
-    assertEquals("1", question.id);
+    assertEquals("1", question.getId());
     assertEquals("theme", question.theme);
     assertEquals("description", question.description);
     assertEquals("statement", question.statement);

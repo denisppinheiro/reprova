@@ -2,6 +2,8 @@ package br.ufmg.engsoft.reprova.model;
 
 public abstract class ReprovaRoute {
     
+	protected ReprovaRoute() {}
+	
     /**
      * Access token.
      */

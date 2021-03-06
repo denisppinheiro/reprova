@@ -38,5 +38,5 @@ public class DefaultGenerator implements IQuestionnaireGenerator{
                 .totalEstimatedTime(totalEstimatedTime)
                 .questions(questions)
                 .build();
-  };
+  }
 }

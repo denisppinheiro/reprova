@@ -1,6 +1,7 @@
 package br.ufmg.engsoft.reprova.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.ufmg.engsoft.reprova.database.QuestionsDAO;
 import br.ufmg.engsoft.reprova.model.generator.EstimatedTimeCalculator;
@@ -17,7 +18,7 @@ public class Questionnaire extends ReprovaModel {
 	/**
 	 * The list of Questions in the Questionnaire
 	 */
-	public final ArrayList<Question> questions;
+	public final List<Question> questions;
 	/**
 	 * The Questionnaire's average difficulty.
 	 */
@@ -26,22 +27,21 @@ public class Questionnaire extends ReprovaModel {
 	 * The Questionnaire's total estimated time.
 	 */
 	private int totalEstimatedTime;
-	
+
 	/**
 	 * Protected constructor, should only be used by the builder.
 	 */
-	protected Questionnaire(String id, String averageDifficulty, int totalEstimatedTime,
-			ArrayList<Question> questions) {
+	protected Questionnaire(String id, String averageDifficulty, int totalEstimatedTime, List<Question> questions) {
 		this.id = id;
 		this.questions = questions;
 		this.averageDifficulty = averageDifficulty;
 		this.totalEstimatedTime = totalEstimatedTime;
 	}
-	
+
 	public void setTotalEstimatedTime(int totalEstimatedTime) {
 		this.totalEstimatedTime = totalEstimatedTime;
 	}
-	
+
 	public int getTotalEstimatedTime() {
 		return totalEstimatedTime;
 	}
@@ -91,7 +91,7 @@ public class Questionnaire extends ReprovaModel {
 		protected String id;
 		protected String averageDifficulty;
 		protected int totalEstimatedTime;
-		protected ArrayList<Question> questions;
+		protected List<Question> questions;
 
 		public Builder id(String id) {
 			this.id = id;
@@ -108,7 +108,7 @@ public class Questionnaire extends ReprovaModel {
 			return this;
 		}
 
-		public Builder questions(ArrayList<Question> questions) {
+		public Builder questions(List<Question> questions) {
 			this.questions = questions;
 			return this;
 		}
@@ -121,7 +121,7 @@ public class Questionnaire extends ReprovaModel {
 
 		public Questionnaire build() {
 			if (this.questions == null) {
-				this.questions = new ArrayList<Question>();
+				this.questions = new ArrayList<>();
 			} else {
 				for (var question : this.questions) {
 					if (question == null) {

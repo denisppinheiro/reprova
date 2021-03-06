@@ -90,7 +90,7 @@ public class QuestionnairesDAO extends MongoDAO<Questionnaire, Questionnaire.Bui
 				questions);
 
 		if (Environments.getInstance().getEnableEstimatedTime()) {
-			doc = doc.append("totalEstimatedTime", questionnaire.totalEstimatedTime);
+			doc = doc.append("totalEstimatedTime", questionnaire.getTotalEstimatedTime());
 		}
 
 		return super.add(doc, questionnaire.getId());

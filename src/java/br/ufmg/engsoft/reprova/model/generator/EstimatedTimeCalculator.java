@@ -12,7 +12,7 @@ public class EstimatedTimeCalculator extends ChainQuestionnaireGeneration{
       totalEstimatedTime += question.estimatedTime;
     }
 
-    questionnaire.totalEstimatedTime = totalEstimatedTime;
+    questionnaire.setTotalEstimatedTime(totalEstimatedTime);
     return handleGeneration(questionnaire);
   }
 }

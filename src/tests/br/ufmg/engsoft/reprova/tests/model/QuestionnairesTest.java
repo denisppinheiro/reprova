@@ -132,8 +132,8 @@ public class QuestionnairesTest {
   @Test
   void post() {
 		_question = new Question.Builder()
-				.theme("theme")
-				.description("description")
+				.setTheme("theme")
+				.setDescription("description")
 				.build();
   	_questions = new ArrayList<Question>();
   	_questions.add(_question);
@@ -216,7 +216,7 @@ public class QuestionnairesTest {
 
   @Test
   void generate() {
-  	var generator = new Questionnaire.Generator().id("1");
+  	var generator = new Questionnaire.Generator().setId("1");
 		when(_json.parse("body", Questionnaire.Generator.class))
 			.thenReturn(generator);
   	
@@ -275,7 +275,7 @@ public class QuestionnairesTest {
 
   @Test
   void generate_DAOError() {
-  	var generator = new Questionnaire.Generator().id("1");
+  	var generator = new Questionnaire.Generator().setId("1");
 		when(_json.parse("body", Questionnaire.Generator.class))
 			.thenReturn(generator);
   	when(_questionnairesDAO.add(any(Questionnaire.class))).thenReturn(false);

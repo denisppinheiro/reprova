@@ -31,11 +31,11 @@ public class QuestionsTest {
 	
 	private void setup() {
 		var builder = new Question.Builder()
-				.id("1")
-				.theme("theme")
-				.statement("statement")
-				.difficulty("Average")
-				.description("description");
+				.setId("1")
+				.setTheme("theme")
+				.setStatement("statement")
+				.setDifficulty("Average")
+				.setDescription("description");
 		_question = builder.build();
 		_renderedQuestion = "question";
 		_renderedQuestions = "questions";

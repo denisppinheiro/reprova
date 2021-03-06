@@ -51,8 +51,8 @@ public class QuestionTest {
   @Test
   void buildSuccess_defaultValues_envOff() throws Exception {
     var question = new Question.Builder()
-      .theme("theme")
-      .description("description")
+      .setTheme("theme")
+      .setDescription("description")
       .build();
 
     assertFalse(question == null);
@@ -76,8 +76,8 @@ public class QuestionTest {
   	EnvironmentUtils.setEnvVariables(true, 3);
   	
     var question = new Question.Builder()
-      .theme("theme")
-      .description("description")
+      .setTheme("theme")
+      .setDescription("description")
       .build();
 
     var statistics = question.getStatistics();
@@ -107,15 +107,15 @@ public class QuestionTest {
   	EnvironmentUtils.setEnvVariables(true, 3);
   	
     var question = new Question.Builder()
-    	.id("1")
-      .theme("theme")
-      .description("description")
-      .statement("statement")
-      .pvt(false)
-      .record(_record)
-      .estimatedTime(20)
-      .choices(_choices)
-      .difficulty("Average")
+    	.setId("1")
+      .setTheme("theme")
+      .setDescription("description")
+      .setStatement("statement")
+      .setPvt(false)
+      .setRecord(_record)
+      .setEstimatedTime(20)
+      .setChoices(_choices)
+      .setDifficulty("Average")
       .build();
     
     var statistics = question.getStatistics();
@@ -217,9 +217,9 @@ public class QuestionTest {
       IllegalArgumentException.class,
       () -> {
         new Question.Builder()
-          .theme("theme")
-          .description("description")
-          .record(record)
+          .setTheme("theme")
+          .setDescription("description")
+          .setRecord(record)
           .build();
       }
     );

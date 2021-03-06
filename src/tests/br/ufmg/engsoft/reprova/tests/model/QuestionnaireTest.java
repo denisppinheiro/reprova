@@ -25,10 +25,10 @@ public class QuestionnaireTest {
     for (int i = 0; i < questionsCount; i++) {
 	    _questions.add(
 	  		new Question.Builder()
-	    		.theme("theme " + (i+1))
-	    		.description("description " + (i+1))
-          .difficulty("Average")
-          .estimatedTime(estimatedTime)
+	    		.setTheme("theme " + (i+1))
+	    		.setDescription("description " + (i+1))
+          .setDifficulty("Average")
+          .setEstimatedTime(estimatedTime)
 	    		.build()
 			);
     }
@@ -67,8 +67,8 @@ public class QuestionnaireTest {
   	EnvironmentUtils.setEnvVariables(true, 3);
   	var questions = new ArrayList<Question>();
   	var question = new Question.Builder()
-        .theme("theme")
-        .description("description")
+        .setTheme("theme")
+        .setDescription("description")
   			.build();
   	
   	questions.add(question);
@@ -133,10 +133,10 @@ public class QuestionnaireTest {
   	setUpQuestionsDAOMock(8, 8);
   	
     var questionnaire = new Questionnaire.Generator()
-			.id("1")
-    	.totalEstimatedTime(8)
-    	.averageDifficulty("Average")
-    	.questionsCount(1)
+			.setId("1")
+    	.setTotalEstimatedTime(8)
+    	.setAverageDifficulty("Average")
+    	.setQuestionsCount(1)
       .generate(_questionsDAO);
     
     assertFalse(questionnaire == null);
@@ -156,10 +156,10 @@ public class QuestionnaireTest {
   	setUpQuestionsDAOMock(8, 8);
   	
     var questionnaire = new Questionnaire.Generator()
-			.id("1")
-    	.totalEstimatedTime(8)
-    	.averageDifficulty("Average")
-    	.questionsCount(1)
+			.setId("1")
+    	.setTotalEstimatedTime(8)
+    	.setAverageDifficulty("Average")
+    	.setQuestionsCount(1)
       .generate(_questionsDAO);
     
     assertFalse(questionnaire == null);

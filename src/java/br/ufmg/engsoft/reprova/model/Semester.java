@@ -18,6 +18,7 @@ public class Semester {
     _1(1),
     _2(2);
 
+    /* value */
     public final int value;
     Reference(int tempVal) {
       this.value = tempVal;

@@ -66,68 +66,90 @@ public class Question {
      * Builder for Question.
      */
     public static class Builder {
+	/*id*/
         protected String id;
-        protected String theme;
-        protected String description;
+        /*theme*/
+	protected String theme;
+        /*description*/
+	protected String description;
+	/*statement*/
         protected String statement;
+	/*record*/
         protected Map<Semester, Map<String, Map<String, Float>>> record;
-        protected boolean pvt = true;
-        protected Integer estimatedTime;
+        /*pvt*/
+	protected boolean pvt = true;
+        /*estimatedtime*/
+	protected Integer estimatedTime;
+	/*difficulty*/
         protected String difficulty;
+	/*diffilcultyGroup*/
         protected List<String> difficultyGroup;
+	/*choices*/
         protected Map<String, Boolean> choices;
+	/*statistics*/
         protected Map<String, Double> statistics;
 
+	/*id*/
         public Builder id(String id) {
             this.id = id;
             return this;
         }
 
+	/*theme*/
         public Builder theme(String theme) {
             this.theme = theme;
             return this;
         }
 
+	/*description*/
         public Builder description(String description) {
             this.description = description;
             return this;
         }
 
+	/*statement*/
         public Builder statement(String statement) {
             this.statement = statement;
             return this;
         }
 
+	    /*record*/
         public Builder record(Map<Semester, Map<String, Map<String, Float>>> record) {
             this.record = record;
             return this;
         }
 
+	    /*pvt*/
         public Builder pvt(boolean pvt) {
             this.pvt = pvt;
             return this;
         }
 
+	    /*choices*/
         public Builder choices(Map<String, Boolean> choices) {
             this.choices = choices;
             return this;
         }
 
+	    /*estimated time*/
         public Builder estimatedTime(int estimatedTime) {
             this.estimatedTime = estimatedTime;
             return this;
         }
 
+	    /*difficulty*/
         public Builder difficulty(String difficulty) {
             this.difficulty = difficulty;
             return this;
         }
         
+	    /*statistics*/
         public Builder statistics(Map<String, Double> statistics) {
         	this.statistics = statistics;
         	return this;
         }
 
+	    /*difficulty group*/
         public Builder difficultyGroup(List<String> difficulty) {
             this.difficultyGroup = difficulty;
             return this;
@@ -237,12 +259,12 @@ public class Question {
 	this.choices = choices;
 	this.statistics = statistics;
   }
-	
+	/*getchoices*/
 	public Map<String, Boolean> getChoices() {
 		return this.choices;
 	}
 	
-	
+	/*get statistics*/
 	public Map<String, Double> getStatistics(){
     	this.statistics.put("average", this.calculateGradeAverage());
     	this.statistics.put("Std Deviation", this.calculateGradeStandardDeviation());
@@ -349,6 +371,7 @@ public class Question {
 							&& this.difficulty.equals(question.difficulty);
 	}
 
+	/*hash code*/
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.id, this.theme, this.description, this.statement, this.record, this.pvt,

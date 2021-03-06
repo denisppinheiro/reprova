@@ -11,7 +11,10 @@ public abstract class ReprovaRoute {
      * Messages.
      */
     protected static final String unauthorized = "\"Unauthorized\"";
+    
+    /* invalid */
     protected static final String invalid = "\"Invalid request\"";
+    /*okstatus*/
     protected static final String okStatus = "\"Ok\"";
     
     /**

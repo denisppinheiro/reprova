@@ -7,9 +7,13 @@ import br.ufmg.engsoft.reprova.model.Question;
 import br.ufmg.engsoft.reprova.model.Questionnaire;
 import br.ufmg.engsoft.reprova.database.QuestionsDAO;
 
+/*
+* DefaultGenerator
+*/
 public class DefaultGenerator implements IQuestionnaireGenerator{
 
-	@Override
+  /* Generate */
+  @Override
   public Questionnaire generate(QuestionsDAO questionsDAO, String averageDifficulty, int questionsCount, int totalEstimatedTime){
     if (totalEstimatedTime == 0){
       totalEstimatedTime = Questionnaire.DEFAULT_ESTIMATED_TIME_MINUTES;

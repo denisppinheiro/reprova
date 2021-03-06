@@ -1,24 +1,30 @@
 package br.ufmg.engsoft.reprova.model;
 
 import java.util.Optional;
-
+/* class Enviroments */ 
 public class Environments {
 
 	private static Environments environments;
-	
+	/* String */
 	private String token;
+	/* port */
 	private int port;
-	
+	/* difficultyGroup */
 	private int difficultyGroup;
-	
+	/* enableAnswers */
 	private boolean enableAnswers;
+	/* enableQuestionnaires */
 	private boolean enableQuestionnaires;
+	/* enableEstimatedTime */
 	private boolean enableEstimatedTime;
+	/* enableMultipleChoice */
 	private boolean enableMultipleChoice;
+	/* enableQuestionStatistics */
 	private boolean enableQuestionStatistics;
 	
 	public static final String TRUE = "true";
 
+	/* Enviroments */ 
 	private Environments() {		
 		Optional<String> enableAnswersEnv = Optional.ofNullable(System.getenv("ENABLE_ANSWERS"));
 		enableAnswersEnv.ifPresentOrElse(
@@ -60,7 +66,7 @@ public class Environments {
 		
 		this.token = System.getenv("REPROVA_TOKEN");
 	}
-	
+	/* Enviroments getInstance */ 
 	public static Environments getInstance() {
 		if (environments == null) {
 			environments = new Environments();
@@ -68,31 +74,33 @@ public class Environments {
 		
 		return environments;
 	}
-	
+	/* isEnableAnswers */ 
 	public boolean isEnableAnswers() {
 		return this.enableAnswers;
 	}
-	
+	/* isEnableQuestionnaires */ 
 	public boolean isEnableQuestionnaires() {
 		return this.enableQuestionnaires;
 	}
 
+	/* isEnableEstimatedTime */ 
 	public boolean isEnableEstimatedTime() {
 		return this.enableEstimatedTime;
 	}
-	
+	/* isEnableMultipleChoice */
 	public boolean isEnableMultipleChoice() {
 		return this.enableMultipleChoice;
 	}
-	
+	/* isEnableQuestionStatistics */
 	public boolean isEnableQuestionStatistics() {
 		return this.enableQuestionStatistics;
 	}
 
+	/* getDifficultyGroup */
 	public int getDifficultyGroup() {
 		return this.difficultyGroup;
 	}
-	
+	/* getToken */
 	public String getToken() {
 		return this.token;
 	}

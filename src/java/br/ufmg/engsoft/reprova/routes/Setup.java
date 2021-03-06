@@ -65,6 +65,9 @@ public class Setup {
     questions.setup();    
   }
   
+  /**
+   * Questionnaire answers
+   */
   public static void answerRoutes(Json json, AnswersDAO answersDAO) {      
       logger.info("Setting up answers route:");
       if (answersDAO == null) {
@@ -74,6 +77,9 @@ public class Setup {
       answers.setup();
   }
   
+  /**
+   * Questionnaire routes
+   */
   public static void questionnaireRoutes(Json json, QuestionnairesDAO questionnairesDAO, QuestionsDAO questionsDAO) {
       logger.info("Setting up questionnaires route:");
       if (questionnairesDAO == null) {

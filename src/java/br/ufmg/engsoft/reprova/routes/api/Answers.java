@@ -11,6 +11,9 @@ import spark.Request;
 import spark.Response;
 import spark.Spark;
 
+/**
+* Classe Answers.
+*/
 public class Answers extends ReprovaRoute {
 	/**
 	   * Logger instance.
@@ -22,6 +25,9 @@ public class Answers extends ReprovaRoute {
 	   */
 	  protected final Json json;
 	  
+	  /**
+	   * Answer DAO.
+	   */
 	  private final AnswersDAO answersDAO;
 	  
 	  /**

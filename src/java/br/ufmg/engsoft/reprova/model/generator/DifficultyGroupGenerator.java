@@ -11,6 +11,9 @@ import br.ufmg.engsoft.reprova.model.Questionnaire;
 import br.ufmg.engsoft.reprova.database.QuestionsDAO;
 import br.ufmg.engsoft.reprova.model.difficulty.DifficultyFactory;
 
+/*
+* The type DifficultyGroupGenerator
+*/
 public class DifficultyGroupGenerator implements IQuestionnaireGenerator{
 
   /**

@@ -361,7 +361,7 @@ public class Questionnaires {
     boolean success = false;
     ArrayList<Questionnaire> questionnaires = new ArrayList<Questionnaire>(questionnairesDAO.list());
     for (Questionnaire questionnaire : questionnaires){
-      String id = questionnaire.id;
+      String id = questionnaire.getId();
       logger.info("Deleting questionnaire " + id);
       
       success = questionnairesDAO.remove(id);

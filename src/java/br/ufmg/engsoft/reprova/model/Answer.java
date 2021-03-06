@@ -1,10 +1,6 @@
 package br.ufmg.engsoft.reprova.model;
 
-public class Answer {
-	/**
-	 * Unique id of the answer
-	 */
-	private String id;
+public class Answer extends ReprovaModel {
 	
 	/**
 	 * Reference to the parent question
@@ -25,11 +21,7 @@ public class Answer {
 	 * Whether the question is private.
 	 */
 	private final boolean pvt;
-	
-	public String getId() {
-		return this.id;
-	}
-	
+
 	public String getDescription() {
 		return this.description;
 	}
@@ -56,7 +48,7 @@ public class Answer {
 		this.questionId = questionId;
 	}
 	
-	public static class Builder {
+	public static class Builder implements ReprovaModelBuilder<Answer> {
 	    protected String id;
 	    protected String description;
 	    protected boolean pvt;

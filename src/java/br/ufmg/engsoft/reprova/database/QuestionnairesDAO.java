@@ -19,214 +19,102 @@ import br.ufmg.engsoft.reprova.mime.json.Json;
 import br.ufmg.engsoft.reprova.model.Environments;
 import br.ufmg.engsoft.reprova.model.Questionnaire;
 
-
 /**
  * DAO for Questionnaire class on mongodb.
  */
-public class QuestionnairesDAO {
-  /**
-   * Logger instance.
-   */
-  protected static final Logger logger = LoggerFactory.getLogger(QuestionnairesDAO.class);
+public class QuestionnairesDAO extends MongoDAO<Questionnaire, Questionnaire.Builder> {
 
-  /**
-   * Json formatter.
-   */
-  protected final Json json;
+	@Override
+	protected String getCollectionName() {
+		return "questionnaires";
+	}
 
-  /**
-   * Questionnaires collection.
-   */
-  protected final MongoCollection<Document> collection;
+	@Override
+	protected Class<Questionnaire.Builder> getBuilderClass() {
+		return Questionnaire.Builder.class;
+	}
 
+	/**
+	 * Basic constructor.
+	 * 
+	 * @param db   the database, mustn't be null
+	 * @param json the json formatter for the database's documents, mustn't be null
+	 * @throws IllegalArgumentException if any parameter is null
+	 */
+	public QuestionnairesDAO(Mongo db, Json json) {
+		super(db, json);
+	}
 
-  /**
-   * Basic constructor.
-   * @param db    the database, mustn't be null
-   * @param json  the json formatter for the database's documents, mustn't be null
-   * @throws IllegalArgumentException  if any parameter is null
-   */
-  public QuestionnairesDAO(Mongo db, Json json) {
-    if (db == null)
-      throw new IllegalArgumentException("db mustn't be null");
+	/**
+	 * Adds or updates the given questionnaire in the database. If the given
+	 * questionnaire has an id, update, otherwise add.
+	 * 
+	 * @param questionnaire the questionnaire to be stored
+	 * @return Whether the questionnaire was successfully added.
+	 * @throws IllegalArgumentException if any parameter is null
+	 */
+	public boolean add(Questionnaire questionnaire) {
+		if (questionnaire == null) {
+			throw new IllegalArgumentException("questionnaire mustn't be null");
+		}
 
-    if (json == null)
-      throw new IllegalArgumentException("json mustn't be null");
+		ArrayList<Document> questions = new ArrayList<Document>();
+		for (var question : questionnaire.questions) {
+			Map<String, Object> record = null;
+			if (question.record != null) {
+				record = question.record // Convert the keys to string,
+						.entrySet() // and values to object.
+						.stream().collect(Collectors.toMap(e -> e.getKey().toString(), Map.Entry::getValue));
+			}
 
-    this.collection = db.getCollection("questionnaires");
+			Document doc = new Document().append("theme", question.theme).append("description", question.description)
+					.append("statement", question.statement)
+					.append("record", record == null ? null : new Document(record)).append("pvt", question.pvt);
 
-    this.json = json;
-  }
+			if (Environments.getInstance().getEnableEstimatedTime()) {
+				doc = doc.append("estimatedTime", question.estimatedTime);
+			}
 
+			if (Environments.getInstance().getEnableMultipleChoice()) {
+				doc = doc.append("choices", question.getChoices());
+			}
 
+			if (Environments.getInstance().getDifficultyGroup() != 0) {
+				doc = doc.append("difficulty", question.difficulty);
+			}
 
-  /**
-   * Parse the given document.
-   * @param document  the question document, mustn't be null
-   * @throws IllegalArgumentException  if any parameter is null
-   * @throws IllegalArgumentException  if the given document is an invalid Questionnaire
-   */
-  protected Questionnaire parseDoc(Document document) {
-    if (document == null)
-      throw new IllegalArgumentException("document mustn't be null");
+			questions.add(doc);
+		}
 
-    var doc = document.toJson();
+		Document doc = new Document().append("averageDifficulty", questionnaire.averageDifficulty).append("questions",
+				questions);
 
-    logger.info("Fetched questionnaire: " + doc);
+		if (Environments.getInstance().getEnableEstimatedTime()) {
+			doc = doc.append("totalEstimatedTime", questionnaire.totalEstimatedTime);
+		}
 
-    try {
-      var questionnaire = json
-        .parse(doc, Questionnaire.Builder.class)
-        .build();
+		return super.add(doc, questionnaire.getId());
+	}
 
-      logger.info("Parsed questionnaire: " + questionnaire);
+	/**
+	 * Remove the questionnaire with the given id from the collection.
+	 * 
+	 * @param id the questionnaire id
+	 * @return Whether the given questionnaire was removed.
+	 * @throws IllegalArgumentException if any parameter is null
+	 */
+	public boolean remove(String id) {
+		if (id == null)
+			throw new IllegalArgumentException("id mustn't be null");
 
-      return questionnaire;
-    }
-    catch (Exception e) {
-      logger.error("Invalid document in database!", e);
-      throw new IllegalArgumentException(e);
-    }
-  }
+		var result = this.collection.deleteOne(eq(new ObjectId(id))).wasAcknowledged();
 
+		if (result)
+			logger.info("Deleted questionnaire " + id);
+		else
+			logger.warn("Failed to delete questionnaire " + id);
 
-  /**
-   * Get the questionnaire with the given id.
-   * @param id  the questionnaire's id in the database.
-   * @return The questionnaire, or null if no such questionnaire.
-   * @throws IllegalArgumentException  if any parameter is null
-   */
-  public Questionnaire get(String id) {
-    if (id == null)
-      throw new IllegalArgumentException("id mustn't be null");
+		return result;
+	}
 
-    var questionnaire = this.collection
-      .find(eq(new ObjectId(id)))
-      .map(this::parseDoc)
-      .first();
-
-    if (questionnaire == null)
-      logger.info("No such questionnaire " + id);
-
-    return questionnaire;
-  }
-
-  /**
-   * List all the questionnaires that match the given non-null parameters.
-   * The questionnaire's statement is ommited.
-   * @return The questionnaires in the collection that match the given parameters, possibly
-   *         empty.
-   * @throws IllegalArgumentException  if there is an invalid Questionnaire
-   */
-  public Collection<Questionnaire> list() {
-    var doc = this.collection.find();
-
-    var result = new ArrayList<Questionnaire>();
-
-    doc.projection(fields())
-      .map(this::parseDoc)
-      .into(result);
-
-    return result;
-  }
-
-  /**
-   * Adds or updates the given questionnaire in the database.
-   * If the given questionnaire has an id, update, otherwise add.
-   * @param questionnaire  the questionnaire to be stored
-   * @return Whether the questionnaire was successfully added.
-   * @throws IllegalArgumentException  if any parameter is null
-   */
-  public boolean add(Questionnaire questionnaire) {
-    if (questionnaire == null){
-      throw new IllegalArgumentException("questionnaire mustn't be null");
-    }
-
-    ArrayList<Document> questions = new ArrayList<Document>();
-    for (var question : questionnaire.questions){
-      Map<String, Object> record = null;
-      if (question.record != null){
-        record = question.record // Convert the keys to string,
-        .entrySet()                                // and values to object.
-        .stream()
-        .collect(
-          Collectors.toMap(
-            e -> e.getKey().toString(),
-            Map.Entry::getValue
-          )
-        );
-      }
-          
-      Document doc = new Document()
-          .append("theme", question.theme)
-          .append("description", question.description)
-          .append("statement", question.statement)
-          .append("record", record == null ? null : new Document(record))
-          .append("pvt", question.pvt);
-      
-      if (Environments.getInstance().getEnableEstimatedTime()){
-        doc = doc.append("estimatedTime", question.estimatedTime);
-      }
-      
-      if (Environments.getInstance().getEnableMultipleChoice()){
-        doc = doc.append("choices", question.getChoices());
-      }
-
-      if (Environments.getInstance().getDifficultyGroup() != 0){
-        doc = doc.append("difficulty", question.difficulty);
-      }
-      
-      questions.add(doc);
-    }
-
-    Document doc = new Document()
-        .append("averageDifficulty", questionnaire.averageDifficulty)
-        .append("questions", questions);
-
-    if (Environments.getInstance().getEnableEstimatedTime()){
-      doc = doc.append("totalEstimatedTime", questionnaire.totalEstimatedTime);
-    }
-    
-    var id = questionnaire.id;
-    if (id != null) {
-      var result = this.collection.replaceOne(
-        eq(new ObjectId(id)),
-        doc
-      );
-
-      if (!result.wasAcknowledged()) {
-        logger.warn("Failed to replace questionnaire " + id);
-        return false;
-      }
-    }
-    else
-      this.collection.insertOne(doc);
-
-    logger.info("Stored questionnaire " + doc.get("_id"));
-
-    return true;
-  }
-
-
-  /**
-   * Remove the questionnaire with the given id from the collection.
-   * @param id  the questionnaire id
-   * @return Whether the given questionnaire was removed.
-   * @throws IllegalArgumentException  if any parameter is null
-   */
-  public boolean remove(String id) {
-    if (id == null)
-      throw new IllegalArgumentException("id mustn't be null");
-
-    var result = this.collection.deleteOne(
-      eq(new ObjectId(id))
-    ).wasAcknowledged();
-
-    if (result)
-      logger.info("Deleted questionnaire " + id);
-    else
-      logger.warn("Failed to delete questionnaire " + id);
-
-    return result;
-  }
 }

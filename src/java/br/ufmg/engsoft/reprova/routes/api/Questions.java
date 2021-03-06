@@ -254,7 +254,7 @@ public class Questions extends ReprovaRoute {
     logger.info("Deleting all questions");
     ArrayList<Question> questions = new ArrayList<Question>(questionsDAO.list(null, null));
     for (Question question : questions){
-      String id = question.id;
+      String id = question.getId();
       logger.info("Deleting question " + id);
       
       success = questionsDAO.remove(id);

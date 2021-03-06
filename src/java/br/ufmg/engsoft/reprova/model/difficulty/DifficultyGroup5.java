@@ -11,10 +11,10 @@ public class DifficultyGroup5 implements IDifficultyGroup{
     if (avg < 60) {return 2;}
     if (avg < 80) {return 3;}
     return 4;
-  };
+  }
 
   public List<String> getDifficulties(){
     String[] group = {"Very Hard", "Hard", "Average", "Easy", "Very Easy"};
     return Arrays.asList(group);
-  };
+  }
 }

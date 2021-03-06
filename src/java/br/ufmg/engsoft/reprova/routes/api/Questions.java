@@ -24,6 +24,10 @@ public class Questions extends ReprovaRoute {
    */
   protected static final Logger logger = LoggerFactory.getLogger(Questions.class);
 
+  public static final String PTOKEN = "token";
+  public static final String APPJSON = "application/json";
+  public static final String DONERESP = "Done. Responding...";
+  public static final String UNAUTHTOKEN = "Unauthorized token: ";
 
   /**
    * Json formatter.
@@ -79,7 +83,7 @@ public class Questions extends ReprovaRoute {
     logger.info("Received questions get:");
 
     var id = request.queryParams("id");
-    var auth = authorized(request.queryParams("token"));
+    var auth = authorized(request.queryParams(PTOKEN));
       
     if (id == null) {
     	return this.get(request, response, auth);
@@ -97,7 +101,7 @@ public class Questions extends ReprovaRoute {
       throw new IllegalArgumentException("id mustn't be null");
     }
 
-    response.type("application/json");
+    response.type(APPJSON);
 
     logger.info("Fetching question " + id);
 
@@ -110,12 +114,12 @@ public class Questions extends ReprovaRoute {
     }
 
     if (question.pvt && !auth) {
-      logger.info("Unauthorized token: " + TOKEN);
+      logger.info(UNAUTHTOKEN + TOKEN);
       response.status(403);
       return unauthorized;
     }
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     response.status(200);
 
@@ -127,7 +131,7 @@ public class Questions extends ReprovaRoute {
    * If not authorized, fetches only public questions.
    */
   protected Object get(Request request, Response response, boolean auth) {
-    response.type("application/json");
+    response.type(APPJSON);
 
     logger.info("Fetching questions.");
 
@@ -136,7 +140,7 @@ public class Questions extends ReprovaRoute {
       auth ? null : false
     );
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     response.status(200);
 
@@ -156,12 +160,12 @@ public class Questions extends ReprovaRoute {
 
     logger.info("Received questions post:" + body);
 
-    response.type("application/json");
+    response.type(APPJSON);
 
-    var token = request.queryParams("token");
+    var token = request.queryParams(PTOKEN);
 
     if (!authorized(token)) {
-      logger.info("Unauthorized token: " + token);
+      logger.info(UNAUTHTOKEN + token);
       response.status(403);
       return unauthorized;
     }
@@ -188,7 +192,7 @@ public class Questions extends ReprovaRoute {
                : 400
     );
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     return okStatus;
   }
@@ -202,13 +206,13 @@ public class Questions extends ReprovaRoute {
   protected Object delete(Request request, Response response) {
     logger.info("Received questions delete:");
 
-    response.type("application/json");
+    response.type(APPJSON);
 
     var id = request.queryParams("id");
-    var token = request.queryParams("token");
+    var token = request.queryParams(PTOKEN);
 
     if (!authorized(token)) {
-      logger.info("Unauthorized token: " + token);
+      logger.info(UNAUTHTOKEN + token);
       response.status(403);
       return unauthorized;
     }
@@ -223,7 +227,7 @@ public class Questions extends ReprovaRoute {
 
     var success = questionsDAO.remove(id);
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     response.status(
       success ? 200
@@ -240,12 +244,12 @@ public class Questions extends ReprovaRoute {
   protected Object deleteAll(Request request, Response response) {
     logger.info("Received questions delete all:");
 
-    response.type("application/json");
+    response.type(APPJSON);
 
-    var token = request.queryParams("token");
+    var token = request.queryParams(PTOKEN);
 
     if (!authorized(token)) {
-      logger.info("Unauthorized token: " + token);
+      logger.info(UNAUTHTOKEN + token);
       response.status(403);
       return unauthorized;
     }
@@ -263,7 +267,7 @@ public class Questions extends ReprovaRoute {
       }
     }
       
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     response.status(
       success ? 200

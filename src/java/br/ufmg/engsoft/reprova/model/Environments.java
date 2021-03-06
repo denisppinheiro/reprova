@@ -16,35 +16,37 @@ public class Environments {
 	private boolean enableEstimatedTime;
 	private boolean enableMultipleChoice;
 	private boolean enableQuestionStatistics;
+	
+	public static final String TRUE = "true";
 
 	private Environments() {		
 		Optional<String> enableAnswersEnv = Optional.ofNullable(System.getenv("ENABLE_ANSWERS"));
 		enableAnswersEnv.ifPresentOrElse(
-			enableAnswers -> this.enableAnswers = enableAnswers.toLowerCase().equals("true"),
+			enableAnswers -> this.enableAnswers = enableAnswers.toLowerCase().equals(TRUE),
 			() -> this.enableAnswers = false
 		);
 		
 		Optional<String> enableQuestionStatisticsEnv = Optional.ofNullable(System.getenv("ENABLE_STATISTICS"));
 		enableQuestionStatisticsEnv.ifPresentOrElse(
-				enableQuestionStatistics -> this.enableQuestionStatistics = enableQuestionStatistics.toLowerCase().equals("true"),
+				enableQuestionStatistics -> this.enableQuestionStatistics = enableQuestionStatistics.toLowerCase().equals(TRUE),
 			() -> this.enableQuestionStatistics = false
 		);
 		
 		Optional<String> enableQuestionnairesEnv = Optional.ofNullable(System.getenv("ENABLE_QUESTIONNAIRES"));
 		enableQuestionnairesEnv.ifPresentOrElse(
-			enableQuestionnaires -> this.enableQuestionnaires = enableQuestionnaires.toLowerCase().equals("true"),
+			enableQuestionnaires -> this.enableQuestionnaires = enableQuestionnaires.toLowerCase().equals(TRUE),
 			() -> this.enableQuestionnaires = false
 		);
 								
 		Optional<String> enableEstimatedTimeEnv = Optional.ofNullable(System.getenv("ENABLE_ESTIMATED_TIME"));
 		enableEstimatedTimeEnv.ifPresentOrElse(
-			enableEstimatedTime -> this.enableEstimatedTime = enableEstimatedTime.toLowerCase().equals("true"),
+			enableEstimatedTime -> this.enableEstimatedTime = enableEstimatedTime.toLowerCase().equals(TRUE),
 			() -> this.enableEstimatedTime = false
 		);
 		
 		Optional<String> enableMultipleChoiceEnv = Optional.ofNullable(System.getenv("ENABLE_MULTIPLE_CHOICE"));
 		enableMultipleChoiceEnv.ifPresentOrElse(
-			enableMultipleChoice -> this.enableMultipleChoice = enableMultipleChoice.toLowerCase().equals("true"),
+			enableMultipleChoice -> this.enableMultipleChoice = enableMultipleChoice.toLowerCase().equals(TRUE),
 			() -> this.enableMultipleChoice = false
 		);
 

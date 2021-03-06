@@ -29,6 +29,10 @@ public class Questionnaires {
    * Access token.
    */
   protected static final String TOKEN = System.getenv("REPROVA_TOKEN");
+  public static final String PTOKEN = "token";
+  public static final String APPJSON = "application/json";
+  public static final String DONERESP = "Done. Responding...";
+  public static final String UNAUTHTOKEN = "Unauthorized token: ";
 
   /**
    * Messages.
@@ -110,7 +114,7 @@ public class Questionnaires {
     logger.info("Received questionnaires get:");
 
     var id = request.queryParams("id");
-    var auth = authorized(request.queryParams("token"));
+    var auth = authorized(request.queryParams(PTOKEN));
       
     if (id == null) {
     	return this.get(request, response, auth);
@@ -128,7 +132,7 @@ public class Questionnaires {
       throw new IllegalArgumentException("id mustn't be null");
     }
 
-    response.type("application/json");
+    response.type(APPJSON);
 
     logger.info("Fetching questionnaire " + id);
 
@@ -140,7 +144,7 @@ public class Questionnaires {
       return invalid;
     }
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     response.status(200);
 
@@ -152,13 +156,13 @@ public class Questionnaires {
    * If not authorized, fetches only public questionnaires.
    */
   protected Object get(Request request, Response response, boolean auth) {
-    response.type("application/json");
+    response.type(APPJSON);
 
     logger.info("Fetching questionnaires.");
 
     var questionnaires = questionnairesDAO.list();
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     response.status(200);
 
@@ -203,12 +207,12 @@ public class Questionnaires {
 
     logger.info("Received questionnaires post:" + body);
 
-    response.type("application/json");
+    response.type(APPJSON);
 
-    var token = request.queryParams("token");
+    var token = request.queryParams(PTOKEN);
 
     if (!authorized(token)) {
-      logger.info("Unauthorized token: " + token);
+      logger.info(UNAUTHTOKEN + token);
       response.status(403);
       return unauthorized;
     }
@@ -244,7 +248,7 @@ public class Questionnaires {
                : 400
     );
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     return okStatus;
   }
@@ -260,12 +264,12 @@ public class Questionnaires {
 
     logger.info("Received questionnaires post:" + body);
 
-    response.type("application/json");
+    response.type(APPJSON);
 
-    var token = request.queryParams("token");
+    var token = request.queryParams(PTOKEN);
 
     if (!authorized(token)) {
-      logger.info("Unauthorized token: " + token);
+      logger.info(UNAUTHTOKEN + token);
       response.status(403);
       return unauthorized;
     }
@@ -294,7 +298,7 @@ public class Questionnaires {
                : 400
     );
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     return okStatus;
   }
@@ -308,13 +312,13 @@ public class Questionnaires {
   protected Object delete(Request request, Response response) {
     logger.info("Received questionnaires delete:");
 
-    response.type("application/json");
+    response.type(APPJSON);
 
     var id = request.queryParams("id");
-    var token = request.queryParams("token");
+    var token = request.queryParams(PTOKEN);
 
     if (!authorized(token)) {
-      logger.info("Unauthorized token: " + token);
+      logger.info(UNAUTHTOKEN + token);
       response.status(403);
       return unauthorized;
     }
@@ -329,7 +333,7 @@ public class Questionnaires {
 
     var success = questionnairesDAO.remove(id);
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     response.status(
       success ? 200
@@ -346,12 +350,12 @@ public class Questionnaires {
   protected Object deleteAll(Request request, Response response) {
     logger.info("Received questionnaires delete all:");
 
-    response.type("application/json");
+    response.type(APPJSON);
 
-    var token = request.queryParams("token");
+    var token = request.queryParams(PTOKEN);
 
     if (!authorized(token)) {
-      logger.info("Unauthorized token: " + token);
+      logger.info(UNAUTHTOKEN + token);
       response.status(403);
       return unauthorized;
     }
@@ -370,7 +374,7 @@ public class Questionnaires {
       }
     }
 
-    logger.info("Done. Responding...");
+    logger.info(DONERESP);
 
     response.status(
       success ? 200

@@ -23,26 +23,24 @@ import com.mongodb.client.MongoCollection;
 import br.ufmg.engsoft.reprova.mime.json.Json;
 import br.ufmg.engsoft.reprova.model.Environments;
 import br.ufmg.engsoft.reprova.model.Question;
+import br.ufmg.engsoft.reprova.model.Question.Builder;
 
 /**
  * DAO for Question class on mongodb.
  */
-public class QuestionsDAO {
-    /**
-     * Logger instance.
-     */
-    protected static final Logger logger = LoggerFactory.getLogger(QuestionsDAO.class);
+public class QuestionsDAO extends MongoDAO<Question, Question.Builder> {
+	
 
-    /**
-     * Json formatter.
-     */
-    protected final Json json;
+	@Override
+	protected String getCollectionName() {
+		return "questions";
+	}
 
-    /**
-     * Questions collection.
-     */
-    protected final MongoCollection<Document> collection;
-
+	@Override
+	protected Class<Builder> getBuilderClass() {
+		return Question.Builder.class;
+	}
+	
     /**
      * Basic constructor.
      *
@@ -51,64 +49,7 @@ public class QuestionsDAO {
      * @throws IllegalArgumentException if any parameter is null
      */
     public QuestionsDAO(Mongo db, Json json) {
-        if (db == null) {
-            throw new IllegalArgumentException("db mustn't be null");
-        }
-
-        if (json == null) {
-            throw new IllegalArgumentException("json mustn't be null");
-        }
-
-        this.collection = db.getCollection("questions");
-
-        this.json = json;
-    }
-
-    /**
-     * Parse the given document.
-     *
-     * @param document the question document, mustn't be null
-     * @throws IllegalArgumentException if any parameter is null
-     * @throws IllegalArgumentException if the given document is an invalid Question
-     */
-    protected Question parseDoc(Document document) {
-        if (document == null) {
-            throw new IllegalArgumentException("document mustn't be null");
-        }
-
-        var doc = document.toJson();
-
-        logger.info("Fetched question: " + doc);
-
-        try {
-            var question = json.parse(doc, Question.Builder.class).build();
-
-            return question;
-        } catch (Exception e) {
-            logger.error("Invalid document in database!", e);
-            throw new IllegalArgumentException(e);
-        }
-    }
-
-    /**
-     * Get the question with the given id.
-     *
-     * @param id the question's id in the database.
-     * @return The question, or null if no such question.
-     * @throws IllegalArgumentException if any parameter is null
-     */
-    public Question get(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("id mustn't be null");
-        }
-
-        var question = this.collection.find(eq(new ObjectId(id))).map(this::parseDoc).first();
-
-        if (question == null) {
-            logger.info("No such question " + id);
-        }
-
-        return question;
+        super(db, json);
     }
 
     /**
@@ -186,42 +127,7 @@ public class QuestionsDAO {
             doc = doc.append("statistics", question.getStatistics());
         }
 
-        var id = question.id;
-        if (id != null) {
-            var result = this.collection.replaceOne(eq(new ObjectId(id)), doc);
-
-            if (!result.wasAcknowledged()) {
-                logger.warn("Failed to replace question " + id);
-                return false;
-            }
-        } else {
-            this.collection.insertOne(doc);
-        }
-
-        logger.info("Stored question " + doc.get("_id"));
-
-        return true;
+        return super.add(doc, question.getId());
     }
 
-    /**
-     * Remove the question with the given id from the collection.
-     *
-     * @param id the question id
-     * @return Whether the given question was removed.
-     * @throws IllegalArgumentException if any parameter is null
-     */
-    public boolean remove(String id) {
-        if (id == null)
-            throw new IllegalArgumentException("id mustn't be null");
-
-        var result = this.collection.deleteOne(eq(new ObjectId(id))).wasAcknowledged();
-
-        if (result) {
-            logger.info("Deleted question " + id);
-        } else {
-            logger.warn("Failed to delete question " + id);
-        }
-
-        return result;
-    }
 }

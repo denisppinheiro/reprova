@@ -1,5 +1,6 @@
 package br.ufmg.engsoft.reprova.database;
 
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
@@ -29,18 +30,16 @@ public class Mongo {
    */
   protected final MongoDatabase db;
 
-
-
   /**
    * Instantiate for access in the given database.
    * @param db  the database name.
    */
   public Mongo(String db) {
 	System.out.println(Mongo.endpoint);
-	  
-    this.db = MongoClients
-      .create(Mongo.endpoint)
-      .getDatabase(db);
+	
+	try (MongoClient mongoClient = MongoClients.create(Mongo.endpoint)) {
+		this.db = mongoClient.getDatabase(db);	
+	}
 
     logger.info("connected to db '" + db + "'");
   }

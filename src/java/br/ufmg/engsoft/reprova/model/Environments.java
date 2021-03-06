@@ -54,7 +54,11 @@ public class Environments {
 			() -> this.difficultyGroup = 0
 		);
 		
-		this.port = Integer.parseInt(System.getenv("PORT"));
+		Optional<String> envPort = Optional.ofNullable(System.getenv("PORT"));
+		envPort.ifPresentOrElse(
+				port -> this.port = Integer.parseInt(envPort.get()),
+				() -> this.port = 8080
+			);
 		
 		this.token = System.getenv("REPROVA_TOKEN");
 	}

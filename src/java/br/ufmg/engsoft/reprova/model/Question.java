@@ -342,7 +342,8 @@ public class Question extends ReprovaModel {
 			return this.id.equals(question.id) && this.theme.equals(question.theme)
 							&& this.description.equals(question.description) && this.statement.equals(question.statement)
 							&& this.record.equals(question.record) && this.pvt == question.pvt
-							&& this.difficulty.equals(question.difficulty);
+							&& (this.difficulty != null && this.difficulty.equals(question.difficulty) 
+							   || this.difficulty == question.difficulty);
 	}
 
 	@Override

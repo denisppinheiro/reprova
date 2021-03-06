@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import com.mongodb.client.MongoCollection;
 
 import br.ufmg.engsoft.reprova.mime.json.Json;
-import br.ufmg.engsoft.reprova.model.Questionnaire;
 import br.ufmg.engsoft.reprova.model.ReprovaModel;
 import br.ufmg.engsoft.reprova.model.ReprovaModelBuilder;
 
@@ -71,7 +70,7 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 	 * 
 	 * @param document mustn't be null
 	 * @throws IllegalArgumentException if any parameter is null
-	 * @throws IllegalArgumentException if the given document is an invalid Question
+	 * @throws IllegalArgumentException if the given document is an invalid Model
 	 */
 	protected M parseDoc(Document document) {
 		if (document == null) {
@@ -80,17 +79,17 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 
 		var doc = document.toJson();
 
-		logger.info("Fetched " + getCollectionName() + ": " + doc);
+		logger.info("Fetched {}: {}" , getCollectionName(), doc);
 
 		try {
 			var obj = (M) json.parse(doc, getBuilderClass()).build();
 
-			logger.info("Parsed \" + getCollectionName() + \": " + obj);
+			logger.info("Parsed {}: {}" , getCollectionName(), obj);
 
 			return obj;
 		} catch (Exception e) {
 			logger.error("Invalid document in database!", e);
-			throw new IllegalArgumentException(e);
+			throw new IllegalArgumentException("Invalid document in database!", e);
 		}
 	}
 
@@ -98,7 +97,7 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 	 * Get the model with the given id.
 	 * 
 	 * @param id the model's id in the database.
-	 * @return The model, or null if no such question.
+	 * @return The model, or null if no such model.
 	 * @throws IllegalArgumentException if any parameter is null
 	 */
 	public M get(String id) {
@@ -109,7 +108,7 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 		var answer = this.collection.find(eq(new ObjectId(id))).map(this::parseDoc).first();
 
 		if (answer == null) {
-			logger.info("No such " + getCollectionName() + " " + id);
+			logger.info("No such {} in {}.", id,  getCollectionName());
 		}
 
 		return answer;
@@ -121,14 +120,14 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 			var result = this.collection.replaceOne(eq(new ObjectId(id)), doc);
 
 			if (!result.wasAcknowledged()) {
-				logger.warn("Failed to replace in " + getCollectionName() + " " + id);
+				logger.warn("Failed to replace {} in {}.", doc.get("_id"), getCollectionName());
 				return false;
 			}
 		} else {
 			this.collection.insertOne(doc);
 		}
 
-		logger.info("Stored in " + getCollectionName() + " " +  doc.get("_id"));
+		logger.info("Stored {} in {}.", doc.get("_id"), getCollectionName());
 		return true;
 	}
 
@@ -147,9 +146,9 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 		var result = this.collection.deleteOne(eq(new ObjectId(id))).wasAcknowledged();
 
 		if (result) {
-			logger.info("Deleted " + getCollectionName() + " " + id);
+			logger.info("Deleted {} in {}.", id, getCollectionName());
 		} else {
-			logger.warn("Failed to delete " + getCollectionName() + " " + id);
+			logger.warn("Failed to delete{} in {}.", id, getCollectionName());
 		}
 
 		return result;

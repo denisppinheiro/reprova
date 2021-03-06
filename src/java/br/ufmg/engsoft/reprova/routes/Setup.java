@@ -56,7 +56,7 @@ public class Setup {
 
     Spark.port(Setup.port);
 
-    logger.info("Spark on port " + Setup.port);
+    logger.info("Spark on port {}", Setup.port);
 
     logger.info("Setting up static resources.");
     Spark.staticFiles.location("/public");

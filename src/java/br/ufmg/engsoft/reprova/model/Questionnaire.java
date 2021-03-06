@@ -28,35 +28,44 @@ public class Questionnaire{
    */
   public int totalEstimatedTime;
   
+  /*DEFAULT_ESTIMATED_TIME_MINUTES*/
   public static final int DEFAULT_ESTIMATED_TIME_MINUTES = 60;
+  /*DEFAULT_QUESTIONS_COUNT*/
   public static final int DEFAULT_QUESTIONS_COUNT = 5;
 
+  /*Generator*/
   public static class Generator{
+    /*id*/
     protected String id;
+    /*averageDifficulty*/
     protected String averageDifficulty;
+    /*totalEstimatedTime*/
     protected int totalEstimatedTime;
+    /*questionsCount*/
     protected int questionsCount;
 
-    public Generator id(String id){
+     /*id*/
+    public Generator setId(String id){
       this.id = id;
       return this;
     }
 
-    public Generator averageDifficulty(String averageDifficulty){
+     /*averageDifficulty*/
+    public Generator setAverageDifficulty(String averageDifficulty){
       this.averageDifficulty = averageDifficulty;
       return this;
     }
-
-    public Generator totalEstimatedTime(int totalEstimatedTime){
+    /*totalEstimatedTime*/
+    public Generator setTotalEstimatedTime(int totalEstimatedTime){
       this.totalEstimatedTime = totalEstimatedTime;
       return this;
     }
-
-    public Generator questionsCount(int questionsCount){
+    /*questionsCount*/
+    public Generator setQuestionsCount(int questionsCount){
       this.questionsCount = questionsCount;
       return this;
     }
-
+    /*generate*/
     public Questionnaire generate(QuestionsDAO questionsDAO){
       QuestionnaireGeneration generationChain = new QuestionnaireGeneration();
 
@@ -70,28 +79,35 @@ public class Questionnaire{
       return generationChain.generate(questionsDAO, this.averageDifficulty, this.questionsCount, this.totalEstimatedTime);
     }
   }
-
+  
+  /*Builder*/
   public static class Builder{
+    /*id*/
     protected String id;
+    /*averageDifficulty*/
     protected String averageDifficulty;
+    /*totalEstimatedTime*/
     protected int totalEstimatedTime;
+    /*questions*/
     protected ArrayList<Question> questions;
 
+    /*id*/
     public Builder id(String id){
       this.id = id;
       return this;
     }
 
+    /*averageDifficulty*/
     public Builder averageDifficulty(String averageDifficulty){
       this.averageDifficulty = averageDifficulty;
       return this;
     }
-
+    /*totalEstimatedTime*/
     public Builder totalEstimatedTime(int totalEstimatedTime){
       this.totalEstimatedTime = totalEstimatedTime;
       return this;
     }
-
+    /*questions*/
     public Builder questions(ArrayList<Question> questions){
       this.questions = questions;
       return this;

@@ -27,7 +27,7 @@ public class QuestionnairesDAO {
   /**
    * Logger instance.
    */
-  protected static final Logger logger = LoggerFactory.getLogger(QuestionnairesDAO.class);
+  protected static final Logger LOGGER = LoggerFactory.getLogger(QuestionnairesDAO.class);
 
   /**
    * Json formatter.
@@ -72,19 +72,19 @@ public class QuestionnairesDAO {
     }
     var doc = document.toJson();
 
-    logger.info("Fetched questionnaire: " + doc);
+    LOGGER.info("Fetched questionnaire: " + doc);
 
     try {
       var questionnaire = json
         .parse(doc, Questionnaire.Builder.class)
         .build();
 
-      logger.info("Parsed questionnaire: " + questionnaire);
+      LOGGER.info("Parsed questionnaire: " + questionnaire);
 
       return questionnaire;
     }
     catch (Exception e) {
-      logger.error("Invalid document in database!", e);
+      LOGGER.error("Invalid document in database!", e);
       throw new IllegalArgumentException(e);
     }
   }
@@ -106,7 +106,7 @@ public class QuestionnairesDAO {
       .first();
 
     if (questionnaire == null) {
-      logger.info("No such questionnaire " + id);
+      LOGGER.info("No such questionnaire " + id);
     }
     return questionnaire;
   }
@@ -198,11 +198,11 @@ public class QuestionnairesDAO {
     	      );
 
 	      if (!result.wasAcknowledged()) {
-	        logger.warn("Failed to replace questionnaire " + id);
+	        LOGGER.warn("Failed to replace questionnaire " + id);
 	        return false;
 	      }
     }
-    logger.info("Stored questionnaire " + doc.get("_id"));
+    LOGGER.info("Stored questionnaire " + doc.get("_id"));
 
     return true;
   }
@@ -223,9 +223,9 @@ public class QuestionnairesDAO {
     ).wasAcknowledged();
 
     if (result) {
-      logger.info("Deleted questionnaire " + id);
+      LOGGER.info("Deleted questionnaire " + id);
     }else {
-      logger.warn("Failed to delete questionnaire " + id);
+      LOGGER.warn("Failed to delete questionnaire " + id);
     }
     return result;
   }

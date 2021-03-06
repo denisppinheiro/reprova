@@ -8,8 +8,9 @@ import br.ufmg.engsoft.reprova.routes.Setup;
 import br.ufmg.engsoft.reprova.mime.json.Json;
 import br.ufmg.engsoft.reprova.model.Environments;
 
-
+/*Type Reprova*/
 public class Reprova {
+  /* Main */
   public static void main(String[] args) {
     var json = new Json();
     

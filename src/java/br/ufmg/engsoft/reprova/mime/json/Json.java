@@ -14,7 +14,6 @@ import br.ufmg.engsoft.reprova.model.Questionnaire;
 import br.ufmg.engsoft.reprova.model.Question;
 import br.ufmg.engsoft.reprova.model.Semester;
 
-
 /**
  * Json format for Reprova's types.
  */
@@ -22,6 +21,8 @@ public class Json {
   /**
    * Deserializer for Semester.
    */
+  public static final String IDENTIFIER = "_id";
+  public static final String OIDENTIFIER = "$oid";
   protected static class SemesterDeserializer implements JsonDeserializer<Semester> {
     /**
      * The semester format is:
@@ -76,12 +77,12 @@ public class Json {
         );
 
       // Mongo's id property doesn't match Question.id:
-      var _id = json.getAsJsonObject().get("_id");
+      var iId = json.getAsJsonObject().get(IDENTIFIER);
 
-      if (_id != null) {
-        questionBuilder.id(
-          _id.getAsJsonObject()
-            .get("$oid")
+      if (iId != null) {
+        questionBuilder.setId(
+          iId.getAsJsonObject()
+            .get(OIDENTIFIER)
             .getAsString()
         );
       }
@@ -112,12 +113,12 @@ public class Json {
         );
 
         // Mongo's id property doesn't match Question.id:
-        var _id = json.getAsJsonObject().get("_id");
+        var iId = json.getAsJsonObject().get(IDENTIFIER);
 
-        if (_id != null) {
-          answerBuilder.id(
-            _id.getAsJsonObject()
-              .get("$oid")
+        if (iId != null) {
+          answerBuilder.getId(
+            iId.getAsJsonObject()
+              .get(OIDENTIFIER)
               .getAsString()
           );
         }
@@ -157,12 +158,12 @@ public class Json {
         );
 
       // Mongo's id property doesn't match Questionnaire.id:
-      var _id = json.getAsJsonObject().get("_id");
+      var iId = json.getAsJsonObject().get(IDENTIFIER);
 
-      if (_id != null) {
+      if (iId != null) {
         questionnaireBuilder.id(
-          _id.getAsJsonObject()
-            .get("$oid")
+          iId.getAsJsonObject()
+            .get(OIDENTIFIER)
             .getAsString()
         );
       }
@@ -202,12 +203,12 @@ public class Json {
         );
 
       // Mongo's id property doesn't match Questionnaire.id:
-      var _id = json.getAsJsonObject().get("_id");
+      var iId = json.getAsJsonObject().get(IDENTIFIER);
 
-      if (_id != null) {
-        questionnaireGenerator.id(
-          _id.getAsJsonObject()
-            .get("$oid")
+      if (iId != null) {
+        questionnaireGenerator.setId(
+          iId.getAsJsonObject()
+            .get(OIDENTIFIER)
             .getAsString()
         );
       }

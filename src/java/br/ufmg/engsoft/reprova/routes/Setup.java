@@ -33,7 +33,7 @@ public class Setup {
   /**
    * The port for the webserver.
    */
-  protected static final int port = Environments.getInstance().getPort();
+  protected static final int PORT = Environments.getInstance().getPort();
 
 
   /**
@@ -53,9 +53,9 @@ public class Setup {
       throw new IllegalArgumentException("questionsDAO mustn't be null");
     }
 
-    Spark.port(Setup.port);
+    Spark.port(Setup.PORT);
 
-    LOGGER.info("Spark on port " + Setup.port);
+    LOGGER.info("Spark on port " + Setup.PORT);
 
     LOGGER.info("Setting up static resources.");
     Spark.staticFiles.location("/public");

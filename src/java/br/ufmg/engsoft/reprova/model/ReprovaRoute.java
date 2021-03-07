@@ -1,26 +1,26 @@
 package br.ufmg.engsoft.reprova.model;
 
-public abstract class ReprovaRoute {
+public class ReprovaRoute {
     
-	protected ReprovaRoute() {}
+	private ReprovaRoute() {}
 	
     /**
      * Access token.
      */
-    protected static final String token = Environments.getInstance().getToken();
+    public static final String TOKEN = Environments.getInstance().getToken();
 
     /**
      * Messages.
      */
-    protected static final String unauthorized = "\"Unauthorized\"";
-    protected static final String invalid = "\"Invalid request\"";
-    protected static final String ok = "\"Ok\"";
+    public static final String UNAUTHORIZED = "\"Unauthorized\"";
+    public static final String INVALID = "\"Invalid request\"";
+    public static final String OK = "\"Ok\"";
     
     /**
      * Check if the given token is authorized.
      */
-    protected static boolean authorized(String token) {
-      return ReprovaRoute.token.equals(token);
+    public static boolean authorized(String token) {
+      return TOKEN.equals(token);
     }
 
 }

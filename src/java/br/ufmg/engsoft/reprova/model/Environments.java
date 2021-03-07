@@ -4,7 +4,7 @@ import java.util.Optional;
 /* class Enviroments */ 
 public class Environments {
 
-	private static Environments environments;
+	private static Environments singletonInstance;
 	/* String */
 	private String token;
 	/* port */
@@ -68,11 +68,11 @@ public class Environments {
 	}
 	/* Enviroments getInstance */ 
 	public static Environments getInstance() {
-		if (environments == null) {
-			environments = new Environments();
+		if (singletonInstance == null) {
+			singletonInstance = new Environments();
 		}
 		
-		return environments;
+		return singletonInstance;
 	}
 	/* isEnableAnswers */ 
 	public boolean isEnableAnswers() {

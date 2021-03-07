@@ -92,23 +92,23 @@ public class Questionnaire{
     protected ArrayList<Question> questions;
 
     /*id*/
-    public Builder id(String id){
+    public Builder setId(String id){
       this.id = id;
       return this;
     }
 
     /*averageDifficulty*/
-    public Builder averageDifficulty(String averageDifficulty){
+    public Builder setAverageDifficulty(String averageDifficulty){
       this.averageDifficulty = averageDifficulty;
       return this;
     }
     /*totalEstimatedTime*/
-    public Builder totalEstimatedTime(int totalEstimatedTime){
+    public Builder setTotalEstimatedTime(int totalEstimatedTime){
       this.totalEstimatedTime = totalEstimatedTime;
       return this;
     }
     /*questions*/
-    public Builder questions(ArrayList<Question> questions){
+    public Builder setQuestions(ArrayList<Question> questions){
       this.questions = questions;
       return this;
     }

@@ -123,9 +123,9 @@ public class DifficultyGroupGenerator implements IQuestionnaireGenerator{
     }
 
     return new Questionnaire.Builder()
-                .averageDifficulty(averageDifficulty)
-                .totalEstimatedTime(totalEstimatedTime)
-                .questions(questions)
+                .setAverageDifficulty(averageDifficulty)
+                .setTotalEstimatedTime(totalEstimatedTime)
+                .setQuestions(questions)
                 .build();
   }
 }

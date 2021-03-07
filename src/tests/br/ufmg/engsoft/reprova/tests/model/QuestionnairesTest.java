@@ -35,7 +35,7 @@ public class QuestionnairesTest {
 	private Question _question;
 	
 	private void setup() {
-		var builder = new Questionnaire.Builder().id("1");
+		var builder = new Questionnaire.Builder().setId("1");
 		_questionnaire = builder.build();
 		_renderedQuestionnaire = "questionnaire";
 		_renderedQuestionnaires = "questionnaires";
@@ -138,7 +138,7 @@ public class QuestionnairesTest {
   	_questions = new ArrayList<Question>();
   	_questions.add(_question);
   	
-  	var builder = new Questionnaire.Builder().questions(_questions);
+  	var builder = new Questionnaire.Builder().setQuestions(_questions);
 		when(_json.parse("body", Questionnaire.Builder.class))
 			.thenReturn(builder);
   	

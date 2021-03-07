@@ -111,7 +111,7 @@ public class Environments {
 
 	//Used by tests ONLY
 	public static void reset() {
-		environments = null;
+		singletonInstance = null;
 	}
 
 }

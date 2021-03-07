@@ -74,10 +74,10 @@ public class QuestionnaireTest {
   	questions.add(question);
   	
     var questionnaire = new Questionnaire.Builder()
-			.id("1")
-    	.questions(questions)
-    	.totalEstimatedTime(8)
-    	.averageDifficulty("Average")
+			.setId("1")
+    	.setQuestions(questions)
+    	.setTotalEstimatedTime(8)
+    	.setAverageDifficulty("Average")
       .build();
     
     assertFalse(questionnaire == null);
@@ -99,7 +99,7 @@ public class QuestionnaireTest {
       IllegalArgumentException.class,
       () -> {
         new Questionnaire.Builder()
-          .questions(questions)
+          .setQuestions(questions)
           .build();
       }
     );

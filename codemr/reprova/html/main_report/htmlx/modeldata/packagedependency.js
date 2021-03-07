@@ -1,4 +1,4 @@
-var matrix = [[0,0,0,0,0,0,0,0],[1,0,0,1,0,0,0,1],[0,0,0,1,0,1,1,0],[0,3,0,0,0,3,0,0],[0,1,1,1,0,1,0,0],[0,1,0,0,0,0,0,0],[0,3,0,3,0,3,0,0],[1,6,0,4,0,0,0,0]]
+var matrix = [[0,0,0,0,0,0,0,0,0],[1,0,0,1,0,0,0,0,1],[0,0,0,1,0,1,0,1,0],[0,3,0,0,0,3,0,0,0],[0,1,1,1,0,1,0,0,0],[0,1,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,3,0,3,0,3,0,0,0],[1,6,0,4,0,0,0,0,0]]
 var packages = [{
 "name": " br.ufmg.engsoft.reprova.model.difficulty", "color": " #3182bd"
 }
@@ -18,9 +18,12 @@ var packages = [{
 "name": " br.ufmg.engsoft.reprova.mime.json", "color": " #fd8d3c"
 }
 ,{
-"name": " br.ufmg.engsoft.reprova.routes.api", "color": " #fdae6b"
+"name": " br.ufmg.engsoft.reprova.tests.utils", "color": " #fdae6b"
 }
 ,{
-"name": " br.ufmg.engsoft.reprova.model.generator", "color": " #fdd0a2"
+"name": " br.ufmg.engsoft.reprova.routes.api", "color": " #fdd0a2"
+}
+,{
+"name": " br.ufmg.engsoft.reprova.model.generator", "color": " #31a354"
 }
 ];

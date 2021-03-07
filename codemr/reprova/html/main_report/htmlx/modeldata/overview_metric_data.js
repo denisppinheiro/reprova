@@ -1,1 +1,1 @@
-var CodeMR_ProjectMetrics = {"Project Name":"reprova", "Number of Highly Problematic Classes":0, "Number of Entities":37, "Number of Problematic Classes":0, "Class Lines of Code":1434, "Number of External Packages":18, "Number of Packages":8, "Number of External Entities":93}
+var CodeMR_ProjectMetrics = {"Project Name":"reprova", "Number of Highly Problematic Classes":0, "Number of Entities":38, "Number of Problematic Classes":0, "Class Lines of Code":1510, "Number of External Packages":18, "Number of Packages":9, "Number of External Entities":101}

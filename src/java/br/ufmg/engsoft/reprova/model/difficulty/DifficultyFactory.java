@@ -1,12 +1,12 @@
 package br.ufmg.engsoft.reprova.model.difficulty;
 
-public class DifficultyFactory{
-  
-  public IDifficultyGroup getDifficulty(int difficultiesCount) {
-	  if (difficultiesCount == 3){
-		  return new DifficultyGroup3();
-	  }
+public class DifficultyFactory {
 
-	  return new DifficultyGroup5();  
-  }
+	public IDifficultyGroup getDifficulty(int difficultiesCount) {
+		if (difficultiesCount == 3) {
+			return new DifficultyGroup3();
+		}
+
+		return new DifficultyGroup5();
+	}
 }

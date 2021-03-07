@@ -38,7 +38,7 @@ public class Questionnaires extends ApiRoute {
 	 */
 	public Questionnaires(Json json, QuestionnairesDAO questionnairesDAO, QuestionsDAO questionsDAO) {
 		super(json);
-		
+
 		if (questionnairesDAO == null) {
 			throw new IllegalArgumentException("questionnairesDAO mustn't be null");
 		}
@@ -50,7 +50,7 @@ public class Questionnaires extends ApiRoute {
 		this.questionnairesDAO = questionnairesDAO;
 		this.questionsDAO = questionsDAO;
 	}
-	
+
 	@Override
 	public String getCollectionName() {
 		return "questionnaires";
@@ -103,7 +103,7 @@ public class Questionnaires extends ApiRoute {
 	 */
 	@Override
 	protected Object getAll(Request request, Response response, boolean auth) {
-		
+
 		logger.info("Fetching questionnaires.");
 
 		var questionnaires = questionnairesDAO.list();
@@ -139,7 +139,7 @@ public class Questionnaires extends ApiRoute {
 	 */
 	protected Object post(Request request, Response response) {
 		String authResult = extractUnauthorized(request, response);
-		
+
 		if (authResult != null) {
 			return authResult;
 		}
@@ -199,7 +199,7 @@ public class Questionnaires extends ApiRoute {
 	 */
 	protected Object generate(Request request, Response response) {
 		String authResult = extractUnauthorized(request, response);
-		
+
 		if (authResult != null) {
 			return authResult;
 		}
@@ -300,7 +300,5 @@ public class Questionnaires extends ApiRoute {
 
 		return ReprovaRoute.OK;
 	}
-
-
 
 }

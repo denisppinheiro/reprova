@@ -5,11 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import br.ufmg.engsoft.reprova.database.AnswersDAO;
 import br.ufmg.engsoft.reprova.database.Mongo;
-import br.ufmg.engsoft.reprova.database.QuestionsDAO;
 import br.ufmg.engsoft.reprova.database.QuestionnairesDAO;
-import br.ufmg.engsoft.reprova.routes.Setup;
+import br.ufmg.engsoft.reprova.database.QuestionsDAO;
 import br.ufmg.engsoft.reprova.mime.json.Json;
 import br.ufmg.engsoft.reprova.model.Environments;
+import br.ufmg.engsoft.reprova.routes.Setup;
 
 public class Reprova {
 

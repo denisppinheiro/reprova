@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import com.mongodb.client.MongoCollection;
 
 import br.ufmg.engsoft.reprova.mime.json.Json;
-import br.ufmg.engsoft.reprova.model.Questionnaire;
 import br.ufmg.engsoft.reprova.model.ReprovaModel;
 import br.ufmg.engsoft.reprova.model.ReprovaModelBuilder;
 
@@ -114,7 +113,7 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 
 		return answer;
 	}
-	
+
 	protected Boolean add(Document doc, String modelId) {
 		String id = modelId;
 		if (id != null) {
@@ -128,7 +127,7 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 			this.collection.insertOne(doc);
 		}
 
-		logger.info("Stored in " + getCollectionName() + " " +  doc.get("_id"));
+		logger.info("Stored in " + getCollectionName() + " " + doc.get("_id"));
 		return true;
 	}
 
@@ -154,13 +153,12 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 
 		return result;
 	}
-	
+
 	/**
-	 * List all the models that match the given non-null parameters. The
-	 * models's statement is ommited.
+	 * List all the models that match the given non-null parameters. The models's
+	 * statement is ommited.
 	 * 
-	 * @return The models in the collection,
-	 *         possibly empty.
+	 * @return The models in the collection, possibly empty.
 	 * @throws IllegalArgumentException if there is an invalid Model
 	 */
 	public Collection<M> list() {

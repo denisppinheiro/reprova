@@ -1,18 +1,14 @@
 package br.ufmg.engsoft.reprova.routes.api;
 
-import spark.Spark;
-import spark.Request;
-import spark.Response;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
 import br.ufmg.engsoft.reprova.database.QuestionsDAO;
+import br.ufmg.engsoft.reprova.mime.json.Json;
 import br.ufmg.engsoft.reprova.model.Question;
 import br.ufmg.engsoft.reprova.model.ReprovaRoute;
-import br.ufmg.engsoft.reprova.mime.json.Json;
+import spark.Request;
+import spark.Response;
+import spark.Spark;
 
 /**
  * Questions route.
@@ -123,7 +119,7 @@ public class Questions extends ApiRoute {
 
 		logger.info("Received questions post: " + body);
 
-		response.type(APPLICATION_JSON);
+		response.type(APPLICATION_JSON);	
 
 		var token = request.queryParams("token");
 

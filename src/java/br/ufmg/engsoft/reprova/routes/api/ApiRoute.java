@@ -29,7 +29,7 @@ public abstract class ApiRoute {
 	 * @param json the json formatter
 	 * @throws IllegalArgumentException if any parameter is null
 	 */
-	public ApiRoute(Json json) {
+	protected ApiRoute(Json json) {
 		if (json == null) {
 			throw new IllegalArgumentException("json mustn't be null");
 		}

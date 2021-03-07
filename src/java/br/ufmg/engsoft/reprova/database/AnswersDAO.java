@@ -31,17 +31,16 @@ public class AnswersDAO extends MongoDAO<Answer, Answer.Builder> {
 	public AnswersDAO(Mongo db, Json json) {
 		super(db, json);
 	}
-	
+
 	@Override
 	protected String getCollectionName() {
 		return "answers";
 	}
-	
+
 	@Override
 	protected Class<Answer.Builder> getBuilderClass() {
 		return Answer.Builder.class;
 	}
-
 
 	/**
 	 * List all the answers that match the given non-null parameters. The question's
@@ -69,7 +68,6 @@ public class AnswersDAO extends MongoDAO<Answer, Answer.Builder> {
 
 		return result;
 	}
-	
 
 	/**
 	 * Adds or updates the given answer in the database. If the given answer has an
@@ -91,10 +89,8 @@ public class AnswersDAO extends MongoDAO<Answer, Answer.Builder> {
 
 		Document doc = new Document().append("description", answer.getDescription()).append("pvt", answer.getPvt())
 				.append("questionId", questionId);
-	
+
 		return super.add(doc, answer.getId());
 	}
-
-
 
 }

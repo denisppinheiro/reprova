@@ -10,5 +10,5 @@ package br.ufmg.engsoft.reprova.model;
 public interface ReprovaModelBuilder<M extends ReprovaModel> {
 
 	public M build();
-	
+
 }

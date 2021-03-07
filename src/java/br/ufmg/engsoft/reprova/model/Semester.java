@@ -13,7 +13,7 @@ public class Semester {
 	 * The reference part of a semester. Either 1 or 2.
 	 */
 	public enum Reference {
-		_1(1), _2(2);
+		S1(1), S2(2);
 
 		public final int value;
 
@@ -22,24 +22,15 @@ public class Semester {
 		}
 
 		/**
-		 * The mapping of integers to Semester.Reference.
-		 */
-		protected static final Map<Integer, Reference> valueMap = new HashMap<Integer, Reference>();
-		static {
-			for (var ref : Reference.values())
-				valueMap.put(ref.value, ref);
-		}
-
-		/**
 		 * Convert a int to a Semester.Reference.
 		 */
 		public static Reference fromInt(int i) {
-			Reference ref = valueMap.get(Integer.valueOf(i));
-
-			if (ref == null)
-				throw new IllegalArgumentException();
-
-			return ref;
+			for (Reference r : values()) {
+				if (r.value == i) {
+					return r;
+				}
+			}
+			throw new IllegalArgumentException();
 		}
 	}
 

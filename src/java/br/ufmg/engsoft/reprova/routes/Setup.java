@@ -31,7 +31,7 @@ public class Setup {
 	/**
 	 * The port for the webserver.
 	 */
-	protected static final int port = Environments.getInstance().getPort();
+	protected static final int PORT = Environments.getInstance().getPort();
 
 	/**
 	 * Setup the service routes. This sets up the routes under the routes directory,
@@ -50,9 +50,9 @@ public class Setup {
 			throw new IllegalArgumentException("questionsDAO mustn't be null");
 		}
 
-		Spark.port(Setup.port);
+		Spark.port(Setup.PORT);
 
-		logger.info("Spark on port {}", Setup.port);
+		logger.info("Spark on port {}", Setup.PORT);
 
 		logger.info("Setting up static resources.");
 		Spark.staticFiles.location("/public");

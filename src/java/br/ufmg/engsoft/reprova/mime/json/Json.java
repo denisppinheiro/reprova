@@ -161,7 +161,7 @@ public class Json {
       var iId = json.getAsJsonObject().get(IDENTIFIER);
 
       if (iId != null) {
-        questionnaireBuilder.id(
+        questionnaireBuilder.setId(
           iId.getAsJsonObject()
             .get(OIDENTIFIER)
             .getAsString()

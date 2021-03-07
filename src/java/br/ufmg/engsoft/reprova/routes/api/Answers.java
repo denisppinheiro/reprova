@@ -1,8 +1,5 @@
 package br.ufmg.engsoft.reprova.routes.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import br.ufmg.engsoft.reprova.database.AnswersDAO;
 import br.ufmg.engsoft.reprova.mime.json.Json;
 import br.ufmg.engsoft.reprova.model.Answer;
@@ -11,17 +8,8 @@ import spark.Request;
 import spark.Response;
 import spark.Spark;
 
-public class Answers extends ReprovaRoute {
-	/**
-	   * Logger instance.
-	   */
-	  protected static final Logger logger = LoggerFactory.getLogger(Answers.class);
-	  
-	  /**
-	   * Json formatter.
-	   */
-	  protected final Json json;
-	  
+public class Answers extends ApiRoute {
+
 	  private final AnswersDAO answersDAO;
 	  
 	  /**
@@ -32,15 +20,12 @@ public class Answers extends ReprovaRoute {
 	   * @throws IllegalArgumentException  if any parameter is null
 	   */
 	  public Answers(Json json, AnswersDAO answersDAO) {
-	    if (json == null) {
-	      throw new IllegalArgumentException("json mustn't be null");
-	    }
+	    super(json);
 
 	    if (answersDAO == null) {
 	      throw new IllegalArgumentException("answersDAO mustn't be null");
 	    }
 
-	    this.json = json;
 	    this.answersDAO = answersDAO;
 	  }
 	
@@ -67,9 +52,9 @@ public class Answers extends ReprovaRoute {
         logger.info("Received answers get:");
 
         String id = request.params(":questionId");
-        boolean auth = authorized(request.queryParams("token"));
+        boolean auth = ReprovaRoute.authorized(request.queryParams("token"));
         
-        // TODO check how to use auth here
+        // TODO check how to use auth here.
         var answers = answersDAO.list(id, auth ? null : false);
         
         logger.info("Done. Responding...");
@@ -86,17 +71,17 @@ public class Answers extends ReprovaRoute {
       protected Object addAnswer(Request request, Response response) {
         String body = request.body();
 
-        logger.info("Received answer post:" + body);
+        logger.info("Received answer post: {}", body);
 
-        response.type("application/json");
+        response.type(APPLICATION_JSON);
 
         String token = request.queryParams("token");
         String questionId = request.params(":questionId");
 
-        if (!authorized(token)) {
-          logger.info("Unauthorized token: " + token);
+        if (!ReprovaRoute.authorized(token)) {
+          logger.info("Unauthorized token: {}", token);
           response.status(403);
-          return unauthorized;
+          return ReprovaRoute.UNAUTHORIZED;
         }
 
         Answer answer;
@@ -108,7 +93,7 @@ public class Answers extends ReprovaRoute {
         catch (Exception e) {
           logger.error("Invalid request payload!", e);
           response.status(400);
-          return invalid;
+          return ReprovaRoute.INVALID;
         }
 
         logger.info("Parsed " + answer.toString());
@@ -123,6 +108,24 @@ public class Answers extends ReprovaRoute {
 
         logger.info("Done. Responding...");
 
-        return ok;
+        return ReprovaRoute.OK;
       }
+
+	@Override
+	public String getCollectionName() {
+		return "answers";
+	}
+
+	@Override
+	protected Object getById(Request request, Response response, String id, boolean auth) {
+		return null;
+	}
+
+	@Override
+	protected Object getAll(Request request, Response response, boolean auth) {
+		return null;
+	}
+
+
+
 }

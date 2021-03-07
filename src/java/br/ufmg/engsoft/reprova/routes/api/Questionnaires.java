@@ -138,15 +138,19 @@ public class Questionnaires extends ApiRoute {
 	 * is for authorized access only.
 	 */
 	protected Object post(Request request, Response response) {
-		String authResult = extractUnauthorized(request, response);
+		String body = request.body();
+		logger.info("Received questionnaires post: {}", body);
+		
+		String unauthorizedResult = extractUnauthorized(request, response);
 
-		if (authResult != null) {
-			return authResult;
+		// if authorized, unauthorizedResult is null 
+		if (unauthorizedResult != null) {
+			return unauthorizedResult;
 		}
 
 		Questionnaire questionnaire;
 		try {
-			questionnaire = json.parse(request.body(), Questionnaire.Builder.class).build();
+			questionnaire = json.parse(body, Questionnaire.Builder.class).build();
 		} catch (Exception e) {
 			logger.error("Invalid request payload!", e);
 			response.status(400);
@@ -175,10 +179,6 @@ public class Questionnaires extends ApiRoute {
 	}
 
 	private String extractUnauthorized(Request request, Response response) {
-		String body = request.body();
-
-		logger.info("Received questionnaires post: {}", body);
-
 		response.type(APPLICATION_JSON);
 
 		var token = request.queryParams("token");
@@ -188,7 +188,7 @@ public class Questionnaires extends ApiRoute {
 			response.status(403);
 			return ReprovaRoute.UNAUTHORIZED;
 		}
-		return body;
+		return null;
 	}
 
 	/**
@@ -198,15 +198,18 @@ public class Questionnaires extends ApiRoute {
 	 * totalEstimatedTime. This endpoint is for authorized access only.
 	 */
 	protected Object generate(Request request, Response response) {
-		String authResult = extractUnauthorized(request, response);
+		String body = request.body();
+		logger.info("Received questionnaires generate: {}", body);
+		String unauthorizedResult = extractUnauthorized(request, response);
 
-		if (authResult != null) {
-			return authResult;
+		// if authorized, unauthorizedResult is null 
+		if (unauthorizedResult != null) {
+			return unauthorizedResult;
 		}
 
 		Questionnaire questionnaire;
 		try {
-			questionnaire = json.parse(request.body(), Questionnaire.Generator.class).generate(questionsDAO);
+			questionnaire = json.parse(body, Questionnaire.Generator.class).generate(questionsDAO);
 		} catch (Exception e) {
 			logger.error("Invalid request payload!", e);
 			response.status(400);

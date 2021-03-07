@@ -82,7 +82,7 @@ public abstract class MongoDAO<M extends ReprovaModel, B extends ReprovaModelBui
 		logger.info("Fetched " + getCollectionName() + ": " + doc);
 
 		try {
-			var obj = (M) json.parse(doc, getBuilderClass()).build();
+			var obj = json.parse(doc, getBuilderClass()).build();
 
 			logger.info("Parsed \" + getCollectionName() + \": " + obj);
 

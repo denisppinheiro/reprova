@@ -59,140 +59,6 @@ public class Question extends ReprovaModel {
 	private final Map<String, Double> statistics;
 
 	/**
-	 * Builder for Question.
-	 */
-	public static class Builder implements ReprovaModelBuilder<Question> {
-		protected String id;
-		protected String theme;
-		protected String description;
-		protected String statement;
-		protected Map<Semester, Map<String, Map<String, Float>>> record;
-		protected boolean pvt = true;
-		protected Integer estimatedTime;
-		protected String difficulty;
-		protected List<String> difficultyGroup;
-		protected Map<String, Boolean> choices;
-		protected Map<String, Double> statistics;
-
-		public Builder id(String id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder theme(String theme) {
-			this.theme = theme;
-			return this;
-		}
-
-		public Builder description(String description) {
-			this.description = description;
-			return this;
-		}
-
-		public Builder statement(String statement) {
-			this.statement = statement;
-			return this;
-		}
-
-		public Builder record(Map<Semester, Map<String, Map<String, Float>>> record) {
-			this.record = record;
-			return this;
-		}
-
-		public Builder pvt(boolean pvt) {
-			this.pvt = pvt;
-			return this;
-		}
-
-		public Builder choices(Map<String, Boolean> choices) {
-			this.choices = choices;
-			return this;
-		}
-
-		public Builder estimatedTime(int estimatedTime) {
-			this.estimatedTime = estimatedTime;
-			return this;
-		}
-
-		public Builder difficulty(String difficulty) {
-			this.difficulty = difficulty;
-			return this;
-		}
-
-		public Builder statistics(Map<String, Double> statistics) {
-			this.statistics = statistics;
-			return this;
-		}
-
-		public Builder difficultyGroup(List<String> difficulty) {
-			this.difficultyGroup = difficulty;
-			return this;
-		}
-
-		/**
-		 * Calculate the difficulty based on the record and the difficultyGroup. Should
-		 * be called when changes are made to the record.
-		 */
-		public Question build() {
-			if (theme == null) {
-				throw new IllegalArgumentException("theme mustn't be null");
-			}
-
-			if (theme.isEmpty()) {
-				throw new IllegalArgumentException("theme mustn't be empty");
-			}
-
-			if (description == null) {
-				throw new IllegalArgumentException("description mustn't be null");
-			}
-
-			if (description.isEmpty()) {
-				throw new IllegalArgumentException("description mustn't be empty");
-			}
-
-			if (this.record == null) {
-				this.record = new HashMap<Semester, Map<String, Map<String, Float>>>();
-			} else {
-				// All inner maps mustn't be null:
-				for (var entry : this.record.entrySet()) {
-					if (entry.getValue() == null) {
-						throw new IllegalArgumentException("inner record mustn't be null");
-					}
-				}
-			}
-
-			if (this.statistics == null && Environments.getInstance().getEnableQuestionStatistics()) {
-				this.statistics = new HashMap<String, Double>();
-			}
-
-			if (!Environments.getInstance().getEnableEstimatedTime()) {
-				this.estimatedTime = null;
-			} else {
-				this.estimatedTime = estimatedTime;
-			}
-
-			if (!Environments.getInstance().getEnableMultipleChoice()) {
-				this.choices = null;
-			} else {
-				this.choices = choices;
-			}
-
-			Environments environments = Environments.getInstance();
-
-			if (environments.getDifficultyGroup() != 0) {
-				// TODO validate possible values (3 and 5)
-				int valueDifficultyGroup = environments.getDifficultyGroup();
-				this.difficultyGroup = new DifficultyFactory().getDifficulty(valueDifficultyGroup).getDifficulties();
-			} else {
-				this.difficultyGroup = null;
-			}
-
-			return new Question(this.id, this.theme, this.description, this.statement, this.record, this.pvt,
-					this.estimatedTime, this.difficulty, this.difficultyGroup, this.choices, this.statistics);
-		}
-	}
-
-	/**
 	 * Protected constructor, should only be used by the builder.
 	 */
 	protected Question(String id, String theme, String description, String statement,
@@ -211,6 +77,7 @@ public class Question extends ReprovaModel {
 		this.choices = choices;
 		this.statistics = statistics;
 	}
+	
 
 	public Map<String, Boolean> getChoices() {
 		return this.choices;
@@ -252,9 +119,7 @@ public class Question extends ReprovaModel {
 			}
 		}
 
-		double stdDev = Math.sqrt(sum / (qtdNotas - 1));
-
-		return stdDev;
+		return Math.sqrt(sum / (qtdNotas - 1));
 	}
 
 	/* Calculate Grades Median */
@@ -270,7 +135,7 @@ public class Question extends ReprovaModel {
 		}
 
 		Collections.sort(gradeList);
-		if (gradeList.size() == 0) {
+		if (gradeList.isEmpty()) {
 			return 0.0;
 		}
 		int i = gradeList.size() / 2;
@@ -350,5 +215,136 @@ public class Question extends ReprovaModel {
 		}
 
 		return builder.toString();
+	}
+	
+	/**
+	 * Builder for Question.
+	 */
+	public static class Builder implements ReprovaModelBuilder<Question> {
+		protected String id;
+		protected String theme;
+		protected String description;
+		protected String statement;
+		protected Map<Semester, Map<String, Map<String, Float>>> record;
+		protected boolean pvt = true;
+		protected Integer estimatedTime;
+		protected String difficulty;
+		protected List<String> difficultyGroup;
+		protected Map<String, Boolean> choices;
+		protected Map<String, Double> statistics;
+
+		public Builder id(String id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder theme(String theme) {
+			this.theme = theme;
+			return this;
+		}
+
+		public Builder description(String description) {
+			this.description = description;
+			return this;
+		}
+
+		public Builder statement(String statement) {
+			this.statement = statement;
+			return this;
+		}
+
+		public Builder record(Map<Semester, Map<String, Map<String, Float>>> record) {
+			this.record = record;
+			return this;
+		}
+
+		public Builder pvt(boolean pvt) {
+			this.pvt = pvt;
+			return this;
+		}
+
+		public Builder choices(Map<String, Boolean> choices) {
+			this.choices = choices;
+			return this;
+		}
+
+		public Builder estimatedTime(int estimatedTime) {
+			this.estimatedTime = estimatedTime;
+			return this;
+		}
+
+		public Builder difficulty(String difficulty) {
+			this.difficulty = difficulty;
+			return this;
+		}
+
+		public Builder statistics(Map<String, Double> statistics) {
+			this.statistics = statistics;
+			return this;
+		}
+
+		public Builder difficultyGroup(List<String> difficulty) {
+			this.difficultyGroup = difficulty;
+			return this;
+		}
+
+		/**
+		 * Calculate the difficulty based on the record and the difficultyGroup. Should
+		 * be called when changes are made to the record.
+		 */
+		@Override
+		public Question build() {
+			if (theme == null) {
+				throw new IllegalArgumentException("theme mustn't be null");
+			}
+
+			if (theme.isEmpty()) {
+				throw new IllegalArgumentException("theme mustn't be empty");
+			}
+
+			if (description == null) {
+				throw new IllegalArgumentException("description mustn't be null");
+			}
+
+			if (description.isEmpty()) {
+				throw new IllegalArgumentException("description mustn't be empty");
+			}
+
+			if (this.record == null) {
+				this.record = new HashMap<Semester, Map<String, Map<String, Float>>>();
+			} else {
+				// All inner maps mustn't be null:
+				for (var entry : this.record.entrySet()) {
+					if (entry.getValue() == null) {
+						throw new IllegalArgumentException("inner record mustn't be null");
+					}
+				}
+			}
+
+			if (this.statistics == null && Environments.getInstance().getEnableQuestionStatistics()) {
+				this.statistics = new HashMap<>();
+			}
+
+			if (!Environments.getInstance().getEnableEstimatedTime()) {
+				this.estimatedTime = null;
+			} 
+			
+			if (!Environments.getInstance().getEnableMultipleChoice()) {
+				this.choices = null;
+			} 
+			
+			Environments environments = Environments.getInstance();
+
+			if (environments.getDifficultyGroup() != 0) {
+				// TODO validate possible values (3 and 5)
+				int valueDifficultyGroup = environments.getDifficultyGroup();
+				this.difficultyGroup = new DifficultyFactory().getDifficulty(valueDifficultyGroup).getDifficulties();
+			} else {
+				this.difficultyGroup = null;
+			}
+
+			return new Question(this.id, this.theme, this.description, this.statement, this.record, this.pvt,
+					this.estimatedTime, this.difficulty, this.difficultyGroup, this.choices, this.statistics);
+		}
 	}
 }

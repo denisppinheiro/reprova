@@ -97,6 +97,7 @@ public class QuestionnairesDAO extends MongoDAO<Questionnaire, Questionnaire.Bui
 	 * @return Whether the given questionnaire was removed.
 	 * @throws IllegalArgumentException if any parameter is null
 	 */
+	@Override
 	public boolean remove(String id) {
 		if (id == null)
 			throw new IllegalArgumentException("id mustn't be null");

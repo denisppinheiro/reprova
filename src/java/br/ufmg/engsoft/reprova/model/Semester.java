@@ -1,7 +1,5 @@
 package br.ufmg.engsoft.reprova.model;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
